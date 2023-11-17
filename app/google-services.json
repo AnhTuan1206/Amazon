@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "194546458851",
+    "project_id": "facebook-b394a",
+    "storage_bucket": "facebook-b394a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194546458851:android:dd3287ece98390497aa5d6",
+        "android_client_info": {
+          "package_name": "com.tuan.amazon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194546458851-b1rkttv4r5onh88q4dbdh5j3vfrdvq05.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tuan.amazon",
+            "certificate_hash": "1b54f710cc615b4b6d5d0a71badd1318365a87d8"
+          }
+        },
+        {
+          "client_id": "194546458851-24k3ouh2sfj6tvcntpuhep4j1c9cegju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD6LFzrxPP7jcXdwhNLcGuq4ZhRcy3R0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194546458851-24k3ouh2sfj6tvcntpuhep4j1c9cegju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

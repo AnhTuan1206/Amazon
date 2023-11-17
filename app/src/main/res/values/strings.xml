@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Amazon</string>
+    <string name="amazon">Amazon</string>
+    <string name="email">Email</string>
+    <string name="ng_nh_p">Đăng nhập</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="m_t_kh_u">Mật khẩu</string>
+    <string name="ng_nh_p_v_i_t_i_kho_n_google">Đăng nhập với tài khoản google</string>
+    <string name="t_o_t_i_kho_n">Tạo tài khoản</string>
+    <string name="default_web_client_id">AIzaSyD_p34wku8Aia3rwF5xb8_jNsXDAQfbQ9A</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook">facebook</string>
+    <string name="b_n_ang_ngh_g">Bạn đang nghĩ gì?</string>
+    <string name="t_o_tin">Tạo tin</string>
+    <string name="tin_c_a_b_n">Tin của bạn</string>
+    <string name="b_n_b">Bạn bè</string>
+    <string name="nh_i_di_n">Ảnh đại diện</string>
+    <string name="l_i_m_i_k_t_b_n">Lời mời kết bạn</string>
+    <string name="nh_ng_ng_i_c_th_b_n_bi_t">Những người có thể bạn biết</string>
+</resources>

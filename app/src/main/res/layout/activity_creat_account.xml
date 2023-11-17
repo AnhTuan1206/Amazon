@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_10sdp"
+    android:clipToPadding="false"
+    android:scrollbars="none"
+    android:overScrollMode="never"
+    tools:context=".activities.CreatAccountActivity">
+
+    <LinearLayout
+        android:id="@+id/linerLayout"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Tạo tài khoản"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/_40ssp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <FrameLayout
+            android:id="@+id/layoutImageProfile"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:background="@drawable/background_imageprofile"
+                android:id="@+id/imageProfile"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"/>
+            <TextView
+                android:id="@+id/tvAddImageProfile"
+                android:layout_gravity="center"
+                android:text="@string/nh_i_di_n"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="Tên"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_15ssp" />
+
+        <EditText
+            android:layout_marginTop="@dimen/_16sdp"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:id="@+id/etInputEmail"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:hint="@string/email"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:textSize="@dimen/_15ssp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:hint="@string/m_t_kh_u"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"/>
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:hint="Xác nhận lại mật khẩu"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"/>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCreatAccount"
+                android:textSize="@dimen/_15ssp"
+                android:text="Tạo tài khoản"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvBackLogin"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Quay lại đăng nhập"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</ScrollView>

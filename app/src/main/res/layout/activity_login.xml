@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_10sdp"
+    tools:context=".activities.LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/linerLayout"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/ng_nh_p"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/_40ssp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:layout_marginTop="@dimen/_50sdp"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:id="@+id/etInputEmail"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:hint="@string/email"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:textSize="@dimen/_15ssp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:hint="@string/m_t_kh_u"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        app:layout_constraintTop_toBottomOf="@id/linerLayout"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            android:text="@string/ng_nh_p"
+            android:textSize="@dimen/_15ssp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvLoginGoogle"
+        app:layout_constraintTop_toBottomOf="@id/frameLayout"
+        android:text="@string/ng_nh_p_v_i_t_i_kho_n_google"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvCreatAccount"
+        app:layout_constraintTop_toBottomOf="@id/tvLoginGoogle"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="@string/t_o_t_i_kho_n"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="@dimen/_15ssp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
