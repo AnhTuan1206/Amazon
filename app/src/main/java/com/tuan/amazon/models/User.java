@@ -6,12 +6,15 @@ public class User {
     private String id;
     private String image;
 
+    private boolean inviteAddFriend;
+
     public User() {
     }
-    public User(String name, String id, String image) {
+    public User(String name, String id, String image, boolean inviteAddFriend) {
         this.name = name;
         this.id = id;
         this.image = image;
+        this.inviteAddFriend = inviteAddFriend;
     }
 
     public String getName() {
@@ -36,5 +39,13 @@ public class User {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Boolean getInviteAddFriend(){
+        return inviteAddFriend;
+    }
+
+    public void setInviteAddFriend(boolean inviteAddFriend){
+         this.inviteAddFriend = inviteAddFriend;
     }
 }

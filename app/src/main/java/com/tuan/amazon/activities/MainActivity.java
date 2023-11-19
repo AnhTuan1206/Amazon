@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
     private FirebaseAuth firebaseAuth;
-    public static String userID;
+    public static String userCurrentID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        userID = firebaseUser.getUid();
+        userCurrentID = firebaseUser.getUid();
 
     }
 

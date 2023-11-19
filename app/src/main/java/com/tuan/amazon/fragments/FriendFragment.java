@@ -1,37 +1,39 @@
 package com.tuan.amazon.fragments;
 
 
-import static com.tuan.amazon.activities.MainActivity.userID;
+import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.tuan.amazon.adapters.AddFriendAdapter;
 import com.tuan.amazon.databinding.FragmentFriendBinding;
+import com.tuan.amazon.listeners.AdddFriendFMListener;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public class FriendFragment extends Fragment {
+public class FriendFragment extends Fragment implements AdddFriendFMListener {
 
     private FragmentFriendBinding binding;
     private FirebaseFirestore firestore;
-    private String userCurrent;
     private List<User> list;
     private AddFriendAdapter adapter;
+    public List<String> listBanGuiLoiKetBanDen;
+    public List<String> listAiDoGuiDenBanLoiMoi;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,32 +51,129 @@ public class FriendFragment extends Fragment {
     }
 
     private void init(){
-        userCurrent = userID;
-        list = new ArrayList<>();
         firestore = FirebaseFirestore.getInstance();
-    }
-    private void getUser(){
-        firestore.collection(Constants.KEY_COLLECTION_USERS)
+        list = new ArrayList<>();
+        listBanGuiLoiKetBanDen = new ArrayList();
+        listAiDoGuiDenBanLoiMoi = new ArrayList();
+
+        firestore.collection(Constants.KEY_LMKB)
+                .document(userCurrentID)
+                .collection(Constants.KEY_GD)
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                            if(userCurrent.equals(queryDocumentSnapshot.getId())){
-                                continue;
-                            }
-                            User user = new User();
-                            user.setName(queryDocumentSnapshot.getString(Constants.KEY_NAME));
-                            user.setImage(queryDocumentSnapshot.getString(Constants.KEY_USER_IMAGE));
-                            user.setId(queryDocumentSnapshot.getId());
-                            list.add(user);
-                        }
-                        if(list.size() > 0){
-                            adapter = new AddFriendAdapter(list);
-                            binding.recyclerListFriendFragment.setAdapter(adapter);
+                                listBanGuiLoiKetBanDen.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
                         }
                     }
+                }).addOnFailureListener(e -> {
+                   showToast(e.getMessage());
                 });
+
+
+        firestore.collection(Constants.KEY_LMKB)
+                .document(userCurrentID)
+                .collection(Constants.KEY_NG)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                            listAiDoGuiDenBanLoiMoi.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
+                            Log.d("com.tuan.amazon.list",listAiDoGuiDenBanLoiMoi.get(0));
+                        }
+                    }
+                }).addOnFailureListener(e -> {
+                    showToast(e.getMessage());
+                });
+
+
     }
+    private void getUser(){
+        if(listAiDoGuiDenBanLoiMoi != null
+            || listBanGuiLoiKetBanDen != null){
+            firestore.collection(Constants.KEY_COLLECTION_USERS)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                                if(userCurrentID.equals(queryDocumentSnapshot.getId())
+                                        || listAiDoGuiDenBanLoiMoi.contains(queryDocumentSnapshot.getId())
+                                        || listBanGuiLoiKetBanDen.contains(queryDocumentSnapshot.getId())){
+                                    continue;
+                                }
+                                User user = new User();
+                                user.setName(queryDocumentSnapshot.getString(Constants.KEY_NAME));
+                                user.setImage(queryDocumentSnapshot.getString(Constants.KEY_USER_IMAGE));
+                                user.setId(queryDocumentSnapshot.getId());
+                                list.add(user);
+                            }
+                            if(list.size() > 0){
+                                adapter = new AddFriendAdapter(list, this);
+                                binding.recyclerListFriendFragment.setAdapter(adapter);
+                            }
+                        }
+                    });
+        }
+        else {
+            firestore.collection(Constants.KEY_COLLECTION_USERS)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                                if(userCurrentID.equals(queryDocumentSnapshot.getId())){
+                                    continue;
+                                }
+                                User user = new User();
+                                user.setName(queryDocumentSnapshot.getString(Constants.KEY_NAME));
+                                user.setImage(queryDocumentSnapshot.getString(Constants.KEY_USER_IMAGE));
+                                user.setId(queryDocumentSnapshot.getId());
+                                list.add(user);
+                            }
+                            if(list.size() > 0){
+                                adapter = new AddFriendAdapter(list, this);
+                                binding.recyclerListFriendFragment.setAdapter(adapter);
+                            }
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void inviteAddFriend(User user) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(Constants.KEY_ID,user.getId());
+        firestore.collection(Constants.KEY_LMKB)
+                .document(userCurrentID)
+                .collection(Constants.KEY_GD)
+                .document(user.getId())
+                .set(map)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        map.clear();
+                        map.put(Constants.KEY_ID,userCurrentID);
+                        firestore.collection(Constants.KEY_LMKB)
+                                .document(user.getId())
+                                .collection(Constants.KEY_NG)
+                                .document(userCurrentID)
+                                .set(map)
+                                .addOnCompleteListener(task1 -> {
+                                    if(task1.isSuccessful()){
+                                        showToast("Bạn đã gửi lời mời kết bạn đến: "+user.getName());
+                                    }
+                                });
+
+                    }else {
+                        showToast("Gửi lời kết bạn đến: "+user.getName()+" thất bại");
+                    }
+                });
+        user.setInviteAddFriend(true);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void showToast(String message){
+        Toast.makeText(getActivity().getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+    }
+
 
 //    private void setView(){
 //        if(list.size() > 0){

@@ -1,6 +1,8 @@
 package com.tuan.amazon.fragments;
 
-import static com.tuan.amazon.activities.MainActivity.userID;
+
+
+import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +30,6 @@ import com.tuan.amazon.utilities.Constants;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private String userCurrent;
     private FirebaseFirestore firestore;
     public HomeFragment() {
 
@@ -50,13 +51,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void init(){
-        userCurrent = userID;
         firestore = FirebaseFirestore.getInstance();
     }
 
     private void loadImageProfile(){
         firestore.collection(Constants.KEY_COLLECTION_USERS)
-                .document(userCurrent)
+                .document(userCurrentID)
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
