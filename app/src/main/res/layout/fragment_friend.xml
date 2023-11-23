@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="false"
-    android:overScrollMode="never"
     android:scrollbars="none"
+    android:overScrollMode="never"
     tools:context=".fragments.FriendFragment">
 
     <LinearLayout
@@ -36,10 +36,11 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnInviteAddFriend"
+                tools:viewBindingType="androidx.appcompat.widget.AppCompatButton"
                 android:text="@string/l_i_m_i_k_t_b_n"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10ssp"

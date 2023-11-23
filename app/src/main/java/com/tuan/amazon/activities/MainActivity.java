@@ -1,24 +1,19 @@
 package com.tuan.amazon.activities;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
 import com.tuan.amazon.adapters.MainAdapterViewPager2;
 import com.tuan.amazon.databinding.ActivityMainBinding;
-import com.tuan.amazon.utilities.Constants;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +54,4 @@ public class MainActivity extends AppCompatActivity {
         userCurrentID = firebaseUser.getUid();
 
     }
-
-
 }

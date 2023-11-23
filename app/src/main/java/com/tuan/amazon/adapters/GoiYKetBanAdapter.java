@@ -16,12 +16,13 @@ import com.tuan.amazon.models.User;
 
 import java.util.List;
 
-public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.AddFriendViewHolder>{
+public class GoiYKetBanAdapter extends RecyclerView.Adapter<GoiYKetBanAdapter.AddFriendViewHolder>{
 
     private  final List<User> list;
     private final AdddFriendFMListener adddFriendFMListener;
 
-    public AddFriendAdapter(List<User> list, AdddFriendFMListener adddFriendFMListener) {
+
+    public GoiYKetBanAdapter(List<User> list, AdddFriendFMListener adddFriendFMListener) {
         this.list = list;
         this.adddFriendFMListener = adddFriendFMListener;
     }
@@ -61,8 +62,14 @@ public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.AddF
                 adddFriendFMListener.inviteAddFriend(user);
                 setBooleanForInviteAddFriend(user);
             });
+            binding.btnCancel.setOnClickListener(V ->{
+                adddFriendFMListener.huyGuiloiKetBan(user);
+                setBooleanForInviteAddFriend(user);
+            });
+            binding.btnGo.setOnClickListener(view -> {
+                adddFriendFMListener.go(user);
+            });
         }
-
         private void setBooleanForInviteAddFriend(User user){
             if(user.getInviteAddFriend()){
                 binding.btnAddFriend.setVisibility(View.GONE);
@@ -75,6 +82,7 @@ public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.AddF
             }
         }
     }
+
 
     private Bitmap getImageSetData(String encodedImage){
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);

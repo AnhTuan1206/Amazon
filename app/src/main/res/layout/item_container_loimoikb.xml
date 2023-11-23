@@ -15,44 +15,32 @@
 
     <TextView
         android:id="@+id/tvName"
+        app:layout_constraintBottom_toTopOf="@id/btnAccept"
         android:layout_marginStart="@dimen/_18sdp"
-        app:layout_constraintLeft_toRightOf="@id/imageProfile"
-        app:layout_constraintBottom_toTopOf="@id/btnAddFriend"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/imageProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAddFriend"
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_marginLeft="@dimen/_18sdp"
-        android:background="@drawable/background_btn_blue"
-        android:text="Thêm bạn bè"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/imageProfile" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnGo"
-        app:layout_constraintLeft_toRightOf="@id/btnAddFriend"
-        android:background="@drawable/background_btn_remove"
-        android:text="Gỡ"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="@dimen/_18sdp"
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="@dimen/_35sdp"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCancel"
-        android:background="@drawable/background_btn_remove"
-        android:text="Huỷ"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/_18sdp"
+        android:id="@+id/btnAccept"
         app:layout_constraintLeft_toRightOf="@id/imageProfile"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="@dimen/_160sdp"
+        android:layout_marginStart="@dimen/_18sdp"
+        android:background="@drawable/background_btn_blue"
+        android:text="Chấp nhận"
+        android:textColor="@color/white"
+        android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_35sdp"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Remove"
+        app:layout_constraintLeft_toRightOf="@id/btnAccept"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/_18sdp"
+        android:background="@drawable/background_btn_white"
+        android:text="Xoá"
+        android:textColor="@color/black"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_35sdp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

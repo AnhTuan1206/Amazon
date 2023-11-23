@@ -3,7 +3,8 @@ package com.tuan.amazon.fragments;
 
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 
-import android.annotation.SuppressLint;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
@@ -14,7 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.tuan.amazon.adapters.AddFriendAdapter;
+import com.tuan.amazon.activities.InviteAddFriendActivity;
+import com.tuan.amazon.adapters.GoiYKetBanAdapter;
 import com.tuan.amazon.databinding.FragmentFriendBinding;
 import com.tuan.amazon.listeners.AdddFriendFMListener;
 import com.tuan.amazon.models.User;
@@ -28,26 +30,34 @@ import java.util.Map;
 public class FriendFragment extends Fragment implements AdddFriendFMListener {
 
     private FragmentFriendBinding binding;
+    private View view;
     private FirebaseFirestore firestore;
     private List<User> list;
-    private AddFriendAdapter adapter;
-    public List<String> listBanGuiLoiKetBanDen;
-    public List<String> listAiDoGuiDenBanLoiMoi;
-
+    private GoiYKetBanAdapter adapter;
+    public static List<String> listBanGuiLoiKetBanDen;
+    public static List<String> listAiDoGuiDenBanLoiMoi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
         getUser();
-//        setView();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentFriendBinding.inflate(getLayoutInflater());
-        return binding.getRoot();
+        binding = FragmentFriendBinding.inflate(inflater, container, false);
+        eventClicks();
+        view = binding.getRoot();
+        return view;
+    }
+
+    private void eventClicks(){
+        binding.btnInviteAddFriend.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity().getApplicationContext(), InviteAddFriendActivity.class));
+            getActivity().finish();
+        });
     }
 
     private void init(){
@@ -79,15 +89,13 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                     if(task.isSuccessful()){
                         for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                             listAiDoGuiDenBanLoiMoi.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
-                            Log.d("com.tuan.amazon.list",listAiDoGuiDenBanLoiMoi.get(0));
                         }
                     }
                 }).addOnFailureListener(e -> {
                     showToast(e.getMessage());
                 });
-
-
     }
+
     private void getUser(){
         if(listAiDoGuiDenBanLoiMoi != null
             || listBanGuiLoiKetBanDen != null){
@@ -108,7 +116,7 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                adapter = new AddFriendAdapter(list, this);
+                                adapter = new GoiYKetBanAdapter(list, this);
                                 binding.recyclerListFriendFragment.setAdapter(adapter);
                             }
                         }
@@ -130,7 +138,7 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                adapter = new AddFriendAdapter(list, this);
+                                adapter = new GoiYKetBanAdapter(list, this);
                                 binding.recyclerListFriendFragment.setAdapter(adapter);
                             }
                         }
@@ -170,15 +178,49 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void huyGuiloiKetBan(User user) {
+        firestore.collection(Constants.KEY_LMKB)
+                .document(userCurrentID)
+                .collection(Constants.KEY_GD)
+                .document(user.getId())
+                .delete()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        listBanGuiLoiKetBanDen.remove(user);
+                        firestore.collection(Constants.KEY_LMKB)
+                                .document(user.getId())
+                                .collection(Constants.KEY_NG)
+                                .document(userCurrentID)
+                                .delete()
+                                .addOnCompleteListener(task1 -> {
+                                    if(task.isSuccessful()){
+                                        showToast("Đả huỷ lời mời kết bạn với: "+user.getName());
+                                    }
+                                    else {
+                                        showToast("Huỷ lời mời kết bạn với: "+user.getName()+" không thành công");
+                                    }
+                                });
+                    }
+                });
+        user.setInviteAddFriend(false);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void go(User user) {
+        list.remove(user);
+        adapter.notifyDataSetChanged();
+    }
+
     private void showToast(String message){
         Toast.makeText(getActivity().getApplicationContext(),message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
-//    private void setView(){
-//        if(list.size() > 0){
-//            adapter = new AddFriendAdapter(list);
-//            binding.recyclerListFriendFragment.setAdapter(adapter);
-//        }
-//    }
 }

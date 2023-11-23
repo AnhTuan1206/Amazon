@@ -5,4 +5,6 @@ import com.tuan.amazon.models.User;
 public interface AdddFriendFMListener {
 
     void inviteAddFriend(User user);
+    void huyGuiloiKetBan(User user);
+    void go(User user);
 }

@@ -1,5 +1,6 @@
 package com.tuan.amazon.models;
 
+
 public class User {
 
     private String name;
