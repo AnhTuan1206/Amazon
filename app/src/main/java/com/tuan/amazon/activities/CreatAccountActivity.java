@@ -37,7 +37,6 @@ public class CreatAccountActivity extends AppCompatActivity {
 
     private ActivityCreatAccountBinding binding;
     private FirebaseAuth firebaseAuth;
-
     private String endcodedImage;
 
     @Override
@@ -98,7 +97,7 @@ public class CreatAccountActivity extends AppCompatActivity {
                             uploadUser(firebaseUser, name, email, endcodedImage);
                         }else {
                             showToask("Tài khoản email này đã tồn tại");
-                            loading(false);
+//                            loading(false);
                         }
                     }
                 });
@@ -154,20 +153,20 @@ public class CreatAccountActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    loading(false);
+//                    loading(false);
                     showToask(e.getMessage());
                 });
     }
 
-    private void loading(Boolean isLoading){
-        if(isLoading){
-            binding.btnCreatAccount.setVisibility(View.INVISIBLE);
-            binding.progressBar.setVisibility(View.VISIBLE);
-        }else {
-            binding.btnCreatAccount.setVisibility(View.VISIBLE);
-            binding.progressBar.setVisibility(View.INVISIBLE);
-        }
-    }
+//    private void loading(Boolean isLoading){
+//        if(isLoading){
+//            binding.btnCreatAccount.setVisibility(View.INVISIBLE);
+//            binding.progressBar.setVisibility(View.VISIBLE);
+//        }else {
+//            binding.btnCreatAccount.setVisibility(View.VISIBLE);
+//            binding.progressBar.setVisibility(View.INVISIBLE);
+//        }
+//    }
 
     private Boolean isValidSignupDetails() {
         if(endcodedImage == null){
@@ -194,8 +193,6 @@ public class CreatAccountActivity extends AppCompatActivity {
         } else
             return true;
     }
-
-
 
 
     private void showToask(String message){

@@ -36,6 +36,7 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
     private GoiYKetBanAdapter adapter;
     public static List<String> listBanGuiLoiKetBanDen;
     public static List<String> listAiDoGuiDenBanLoiMoi;
+    public static List<String> listFriend;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
         list = new ArrayList<>();
         listBanGuiLoiKetBanDen = new ArrayList();
         listAiDoGuiDenBanLoiMoi = new ArrayList();
+        listFriend = new ArrayList<>();
 
         firestore.collection(Constants.KEY_LMKB)
                 .document(userCurrentID)
@@ -73,13 +75,12 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                                listBanGuiLoiKetBanDen.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
+                            listBanGuiLoiKetBanDen.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
                         }
                     }
                 }).addOnFailureListener(e -> {
-                   showToast(e.getMessage());
+                    showToast(e.getMessage());
                 });
-
 
         firestore.collection(Constants.KEY_LMKB)
                 .document(userCurrentID)
@@ -94,11 +95,27 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                 }).addOnFailureListener(e -> {
                     showToast(e.getMessage());
                 });
+
+        firestore.collection(Constants.KEY_FRIEND)
+                .document(userCurrentID)
+                .collection(Constants.KEY_YOUR_FRIENDS)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                            listFriend.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
+                        }
+                    }
+                });
+
+
     }
+
 
     private void getUser(){
         if(listAiDoGuiDenBanLoiMoi != null
-            || listBanGuiLoiKetBanDen != null){
+            || listBanGuiLoiKetBanDen != null
+                || listFriend != null){
             firestore.collection(Constants.KEY_COLLECTION_USERS)
                     .get()
                     .addOnCompleteListener(task -> {
@@ -106,6 +123,7 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                                 if(userCurrentID.equals(queryDocumentSnapshot.getId())
                                         || listAiDoGuiDenBanLoiMoi.contains(queryDocumentSnapshot.getId())
+                                        || listFriend.contains(queryDocumentSnapshot.getId())
                                         || listBanGuiLoiKetBanDen.contains(queryDocumentSnapshot.getId())){
                                     continue;
                                 }

@@ -94,10 +94,10 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        loading(true);
+//                        loading(true);
                         sendUserToMainActivity();
                     }else {
-                        loading(false);
+//                        loading(false);
                         showToask("Đăng nhập thất bại, hãy kiểm tra lại email hoặc mật khẩu");
                     }
                 });
@@ -168,10 +168,10 @@ public class LoginActivity extends AppCompatActivity {
                 .set(user)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
-                        loading(true);
+//                        loading(true);
                         sendUserToMainActivity();
                     }else {
-                        loading(false);
+//                        loading(false);
                         showToask("Đăng nhập thất bại");
                     }
                 });
@@ -196,13 +196,13 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
     }
 
-    private void loading(Boolean isLoading){
-        if(isLoading){
-            binding.btnLogin.setVisibility(View.INVISIBLE);
-            binding.progressBar.setVisibility(View.VISIBLE);
-        }else {
-            binding.btnLogin.setVisibility(View.VISIBLE);
-            binding.progressBar.setVisibility(View.INVISIBLE);
-        }
-    }
+//    private void loading(Boolean isLoading){
+//        if(isLoading){
+//            binding.btnLogin.setVisibility(View.INVISIBLE);
+//            binding.progressBar.setVisibility(View.VISIBLE);
+//        }else {
+//            binding.btnLogin.setVisibility(View.VISIBLE);
+//            binding.progressBar.setVisibility(View.INVISIBLE);
+//        }
+//    }
 }

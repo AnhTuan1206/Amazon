@@ -6,8 +6,8 @@ public class User {
     private String name;
     private String id;
     private String image;
-
     private boolean inviteAddFriend;
+
 
     public User() {
     }
@@ -45,7 +45,6 @@ public class User {
     public Boolean getInviteAddFriend(){
         return inviteAddFriend;
     }
-
     public void setInviteAddFriend(boolean inviteAddFriend){
          this.inviteAddFriend = inviteAddFriend;
     }
