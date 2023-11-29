@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Amazon"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.FriendActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.InviteAddFriendActivity"
             android:exported="false"
             android:label="@string/title_activity_invite_add_friend"

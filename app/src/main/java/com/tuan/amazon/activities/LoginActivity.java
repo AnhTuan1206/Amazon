@@ -108,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
     private void sendUserToMainActivity() {
         binding.progressBar.setVisibility(View.GONE);
         startActivity(new Intent(this, MainActivity.class));
-        this.finish();
     }
 
     private void signInWithGG(){

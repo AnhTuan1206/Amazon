@@ -4,6 +4,7 @@ package com.tuan.amazon.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,20 +20,20 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private MainAdapterViewPager2 mainAdapterViewPager2;
-
     private FirebaseFirestore firestore;
     private FirebaseAuth firebaseAuth;
     public static String userCurrentID;
+    public static String userCurrentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        init();
+        initData();
     }
 
-    private void init(){
+    private void initData(){
         mainAdapterViewPager2 = new MainAdapterViewPager2(this);
         binding.viewPager2.setAdapter(mainAdapterViewPager2);
         new TabLayoutMediator(binding.tabLayout, binding.viewPager2, (tab, position) -> {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         userCurrentID = firebaseUser.getUid();
-
+        userCurrentName = firebaseUser.getDisplayName();
     }
+
 }

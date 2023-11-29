@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.tuan.amazon.activities.FriendActivity;
 import com.tuan.amazon.activities.InviteAddFriendActivity;
 import com.tuan.amazon.adapters.GoiYKetBanAdapter;
 import com.tuan.amazon.databinding.FragmentFriendBinding;
@@ -57,7 +58,10 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
     private void eventClicks(){
         binding.btnInviteAddFriend.setOnClickListener(v -> {
             startActivity(new Intent(getActivity().getApplicationContext(), InviteAddFriendActivity.class));
-            getActivity().finish();
+        });
+
+        binding.btnFriend.setOnClickListener(v ->{
+            startActivity(new Intent(getActivity().getApplicationContext(), FriendActivity.class));
         });
     }
 

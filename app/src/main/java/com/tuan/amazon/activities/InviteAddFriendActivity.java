@@ -4,10 +4,12 @@ import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 import static com.tuan.amazon.fragments.FriendFragment.listAiDoGuiDenBanLoiMoi;
 import static com.tuan.amazon.fragments.FriendFragment.listFriend;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,19 +36,31 @@ public class InviteAddFriendActivity extends AppCompatActivity implements AcInvi
         super.onCreate(savedInstanceState);
         binding = ActivityInviteAddFriendBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        init();
-        events();
+        initView();
+        initData();
     }
 
-    private void events(){
-        binding.btnBack.setOnClickListener(view -> {
-           startActivity(new Intent(this, MainActivity.class));
-        });
+    private void initView(){
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Lời mời kết bạn");
     }
 
-    private void init() {
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default: break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void initData() {
         firestore = FirebaseFirestore.getInstance();
         list = new ArrayList<>();
+
         firestore.collection(Constants.KEY_COLLECTION_USERS)
                 .get()
                 .addOnCompleteListener(task -> {
