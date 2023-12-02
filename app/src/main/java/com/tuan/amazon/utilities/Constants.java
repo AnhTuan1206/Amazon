@@ -12,4 +12,7 @@ public class Constants {
     public static final String KEY_NG = "aiĐóGửiĐếnBạnLờiMời";
     public static final String KEY_ID = "ID";
     public static final String KEY_YOUR_FRIENDS = "yourFriends";
+    public static final String KEY_Personal_information = "personalInformation";
+    public static final String KEY_CITY = "city";
+    public static final String KEY_CHE_DO_CONG_KHAI = "cdck";
 }

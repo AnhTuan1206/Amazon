@@ -36,4 +36,9 @@
     <string name="t_nh_tr_ng_m_i_quan_h">Tình trạng mối quan hệ</string>
     <string name="n_i_l_m_vi_c">Nơi làm việc</string>
     <string name="t_nh_th_nh_ph_hi_n_t_i">Tỉnh/Thành phố hiện tại</string>
+    <string name="th_m_t_nh_th_nh_ph_hi_n_t_i">Thêm tỉnh/thành phố hiện tại</string>
+    <string name="th_m_n_i_l_m_vi_c">Thêm nơi làm việc</string>
+    <string name="t_n_n_i_l_m_vi_c">Tên nơi làm việc</string>
+    <string name="th_m_qu_qu_n">Thêm quê quán</string>
+
 </resources>

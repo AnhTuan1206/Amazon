@@ -4,6 +4,7 @@ package com.tuan.amazon.fragments;
 
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.databinding.FragmentHomeBinding;
 
 import com.tuan.amazon.utilities.Constants;
@@ -31,10 +33,6 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private FirebaseFirestore firestore;
-    public HomeFragment() {
-
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +45,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        eventsClick();
         return binding.getRoot();
     }
 
@@ -68,9 +67,9 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private void eventsClick(){
+        binding.imageProfile.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity().getApplicationContext(), ProfileActivity.class));
+        });
     }
 }

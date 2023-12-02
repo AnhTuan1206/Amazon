@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_icon"
+    tools:context=".fragments.HomeTownFragment">
+
+    <LinearLayout
+        android:id="@+id/layoutLiner"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBack"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/ic_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="@string/th_m_qu_qu_n"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout"
+        app:layout_constraintTop_toBottomOf="@id/layoutLiner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="center"
+            android:background="@drawable/ic_hometown"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/etThemNoiSong"
+            android:hint="Tên quê quán"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:textSize="@dimen/_15ssp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        app:layout_constraintTop_toBottomOf="@id/layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="@dimen/_5sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:id="@+id/btnCheDoCongKhai"
+        android:text=" Công khai "
+        android:background="@drawable/background_btn_whiter"
+        android:drawableLeft="@drawable/ic_public"
+        android:drawableRight="@drawable/ic_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:text="Lưu"
+            android:enabled="false"
+            android:background="@drawable/background_btn_whiter"
+            android:textColor="@color/gray"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

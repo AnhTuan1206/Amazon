@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import com.tuan.amazon.R;
@@ -18,16 +19,20 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start();
-            }
-        });
+        start();
     }
 
     private void start(){
-        Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                moveInLogin();
+            }
+        }, 2500);
+    }
+
+    private void moveInLogin(){
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

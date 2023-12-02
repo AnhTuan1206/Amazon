@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_nav_graph"
+    app:startDestination="@id/profilePersonalFragment">
+
+    <fragment
+        android:id="@+id/profilePersonalFragment"
+        android:name="com.tuan.amazon.fragments.ProfilePersonalFragment"
+        android:label="fragment_profile_personal"
+        tools:layout="@layout/fragment_profile_personal" >
+        <action
+            android:id="@+id/action_profilePersonalFragment_to_noiSongHienTaiFragment"
+            app:destination="@id/noiSongHienTaiFragment" />
+        <action
+            android:id="@+id/action_profilePersonalFragment_to_workPlaceFragment"
+            app:destination="@id/workPlaceFragment" />
+        <action
+            android:id="@+id/action_profilePersonalFragment_to_homeTownFragment"
+            app:destination="@id/homeTownFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noiSongHienTaiFragment"
+        android:name="com.tuan.amazon.fragments.noiSongHienTaiFragment"
+        android:label="fragment_noi_song_hien_tai"
+        tools:layout="@layout/fragment_noi_song_hien_tai" />
+    <fragment
+        android:id="@+id/workPlaceFragment"
+        android:name="com.tuan.amazon.fragments.WorkPlaceFragment"
+        android:label="fragment_work_place"
+        tools:layout="@layout/fragment_work_place" />
+    <fragment
+        android:id="@+id/homeTownFragment"
+        android:name="com.tuan.amazon.fragments.HomeTownFragment"
+        android:label="fragment_home_town"
+        tools:layout="@layout/fragment_home_town" />
+</navigation>

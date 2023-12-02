@@ -6,4 +6,5 @@
     <color name="background_imageProfile">#ECECEC</color>
     <color name="background_icon">#DDDDDD</color>
     <color name="xanh_nhat">#CCFFFF</color>
+    <color name="gray">#808080</color>
 </resources>

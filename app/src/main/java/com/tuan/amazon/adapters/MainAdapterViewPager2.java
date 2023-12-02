@@ -19,8 +19,6 @@ public class MainAdapterViewPager2 extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0:
-                return new HomeFragment();
             case 1:
                 return new FriendFragment();
             case 2:
