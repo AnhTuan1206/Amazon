@@ -1,13 +1,12 @@
 package com.tuan.amazon.activities;
 
+import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 import static com.tuan.amazon.fragments.FriendFragment.listAiDoGuiDenBanLoiMoi;
-import static com.tuan.amazon.fragments.FriendFragment.listFriend;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -16,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.tuan.amazon.adapters.LoiMoiKetBanAdapter;
 import com.tuan.amazon.databinding.ActivityInviteAddFriendBinding;
-import com.tuan.amazon.listeners.AcInviteAddFr;
+import com.tuan.amazon.listeners.ActivityInviteAddFr;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InviteAddFriendActivity extends AppCompatActivity implements AcInviteAddFr {
+public class InviteAddFriendActivity extends AppCompatActivity implements ActivityInviteAddFr {
 
     private ActivityInviteAddFriendBinding binding;
     private FirebaseFirestore firestore;
@@ -133,7 +132,7 @@ public class InviteAddFriendActivity extends AppCompatActivity implements AcInvi
                     }
                 });
         listAiDoGuiDenBanLoiMoi.remove(user.getId());
-        listFriend.add(user.getId());
+        listMyFriend.add(user.getId());
     }
     @Override
     public void Remove(User user) {

@@ -15,4 +15,6 @@ public class Constants {
     public static final String KEY_Personal_information = "personalInformation";
     public static final String KEY_CITY = "city";
     public static final String KEY_CHE_DO_CONG_KHAI = "cdck";
+    public static final String KEY_CURRENT_USER_ID= "currentUserId";
+    public static final String KEY_USER_PROFILE = "userProfile";
 }

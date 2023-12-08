@@ -1,7 +1,7 @@
 package com.tuan.amazon.activities;
 
+import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentName;
-import static com.tuan.amazon.fragments.FriendFragment.listFriend;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,14 +54,14 @@ public class FriendActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         list = new ArrayList<>();
 
-        if(listFriend != null){
+        if(listMyFriend != null){
             firestore.collection(Constants.KEY_COLLECTION_USERS)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()){
                             int count = 0;
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                                if(listFriend.contains(queryDocumentSnapshot.getId()) && count < listFriend.size()){
+                                if(listMyFriend.contains(queryDocumentSnapshot.getId()) && count < listMyFriend.size()){
                                     User user = new User();
                                     user.setName(queryDocumentSnapshot.getString(Constants.KEY_NAME));
                                     user.setImage(queryDocumentSnapshot.getString(Constants.KEY_USER_IMAGE));

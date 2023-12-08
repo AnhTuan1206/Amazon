@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,7 +57,7 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
     }
 
     private void evnetsClick(){
-            binding.btnSave.setOnClickListener(v -> {
+        binding.btnSave.setOnClickListener(v -> {
                 Map map = new HashMap();
                 String city = binding.etThemNoiSong.getText().toString();
                 String cheDo = binding.btnCheDoCongKhai.getText().toString();
@@ -74,6 +75,10 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
 
         binding.btnCheDoCongKhai.setOnClickListener(v ->{
 
+        });
+
+        binding.btnBack.setOnClickListener(v ->{
+            Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
         });
     }
 

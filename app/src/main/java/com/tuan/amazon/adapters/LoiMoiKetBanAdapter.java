@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.tuan.amazon.databinding.ItemContainerLoimoikbBinding;
-import com.tuan.amazon.listeners.AcInviteAddFr;
+import com.tuan.amazon.listeners.ActivityInviteAddFr;
 import com.tuan.amazon.models.User;
 
 import java.util.List;
 
 public class LoiMoiKetBanAdapter extends RecyclerView.Adapter<LoiMoiKetBanAdapter.LMKB> {
     private List<User> list;
-    private AcInviteAddFr acInviteAddFr;
+    private ActivityInviteAddFr acInviteAddFr;
 
-    public LoiMoiKetBanAdapter(List<User> list, AcInviteAddFr acInviteAddFr) {
+    public LoiMoiKetBanAdapter(List<User> list, ActivityInviteAddFr acInviteAddFr) {
         this.list = list;
         this.acInviteAddFr = acInviteAddFr;
     }

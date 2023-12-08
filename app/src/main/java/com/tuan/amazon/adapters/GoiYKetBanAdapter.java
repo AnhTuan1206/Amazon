@@ -69,6 +69,9 @@ public class GoiYKetBanAdapter extends RecyclerView.Adapter<GoiYKetBanAdapter.Ad
             binding.btnGo.setOnClickListener(view -> {
                 adddFriendFMListener.go(user);
             });
+            binding.imageProfile.setOnClickListener(v ->{
+                adddFriendFMListener.goProfilePersional(user);
+            });
         }
         private void setBooleanForInviteAddFriend(User user){
             if(user.getInviteAddFriend()){

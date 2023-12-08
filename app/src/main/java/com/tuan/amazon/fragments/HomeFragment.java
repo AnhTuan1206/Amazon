@@ -69,7 +69,13 @@ public class HomeFragment extends Fragment {
 
     private void eventsClick(){
         binding.imageProfile.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity().getApplicationContext(), ProfileActivity.class));
+            chuyenManHinh();
         });
+    }
+
+    private void chuyenManHinh(){
+        Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
+        intent.putExtra(Constants.KEY_CURRENT_USER_ID, userCurrentID);
+        startActivity(intent);
     }
 }

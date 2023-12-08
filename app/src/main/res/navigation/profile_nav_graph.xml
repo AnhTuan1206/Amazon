@@ -19,20 +19,48 @@
         <action
             android:id="@+id/action_profilePersonalFragment_to_homeTownFragment"
             app:destination="@id/homeTownFragment" />
+        <action
+            android:id="@+id/action_profilePersonalFragment_to_friendActivity"
+            app:destination="@id/friendActivity" />
+        <action
+            android:id="@+id/action_profilePersonalFragment_to_friendFragment"
+            app:destination="@id/friendFragment" />
     </fragment>
     <fragment
         android:id="@+id/noiSongHienTaiFragment"
         android:name="com.tuan.amazon.fragments.noiSongHienTaiFragment"
         android:label="fragment_noi_song_hien_tai"
-        tools:layout="@layout/fragment_noi_song_hien_tai" />
+        tools:layout="@layout/fragment_noi_song_hien_tai" >
+        <action
+            android:id="@+id/action_noiSongHienTaiFragment_to_profilePersonalFragment"
+            app:destination="@id/profilePersonalFragment" />
+    </fragment>
     <fragment
         android:id="@+id/workPlaceFragment"
         android:name="com.tuan.amazon.fragments.WorkPlaceFragment"
         android:label="fragment_work_place"
-        tools:layout="@layout/fragment_work_place" />
+        tools:layout="@layout/fragment_work_place" >
+        <action
+            android:id="@+id/action_workPlaceFragment_to_profilePersonalFragment"
+            app:destination="@id/profilePersonalFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeTownFragment"
         android:name="com.tuan.amazon.fragments.HomeTownFragment"
         android:label="fragment_home_town"
-        tools:layout="@layout/fragment_home_town" />
+        tools:layout="@layout/fragment_home_town" >
+        <action
+            android:id="@+id/action_homeTownFragment_to_profilePersonalFragment"
+            app:destination="@id/profilePersonalFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/friendActivity"
+        android:name="com.tuan.amazon.activities.FriendActivity"
+        android:label="activity_friend"
+        tools:layout="@layout/activity_friend" />
+    <fragment
+        android:id="@+id/friendFragment"
+        android:name="com.tuan.amazon.fragments.FriendFragment"
+        android:label="fragment_friend"
+        tools:layout="@layout/fragment_friend" />
 </navigation>

@@ -3,6 +3,7 @@ package com.tuan.amazon.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,13 @@ public class WorkPlaceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWorkPlaceBinding.inflate(inflater, null, false);
+        eventsClick();
         return binding.getRoot();
+    }
+
+    private void eventsClick(){
+        binding.btnBack.setOnClickListener(v ->{
+            Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
+        });
     }
 }

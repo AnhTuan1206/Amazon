@@ -1,6 +1,7 @@
 package com.tuan.amazon.fragments;
 
 
+import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 
 
@@ -8,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.tuan.amazon.activities.FriendActivity;
 import com.tuan.amazon.activities.InviteAddFriendActivity;
+import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.adapters.GoiYKetBanAdapter;
 import com.tuan.amazon.databinding.FragmentFriendBinding;
 import com.tuan.amazon.listeners.AdddFriendFMListener;
@@ -37,7 +38,6 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
     private GoiYKetBanAdapter adapter;
     public static List<String> listBanGuiLoiKetBanDen;
     public static List<String> listAiDoGuiDenBanLoiMoi;
-    public static List<String> listFriend;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,6 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
         list = new ArrayList<>();
         listBanGuiLoiKetBanDen = new ArrayList();
         listAiDoGuiDenBanLoiMoi = new ArrayList();
-        listFriend = new ArrayList<>();
 
         firestore.collection(Constants.KEY_LMKB)
                 .document(userCurrentID)
@@ -99,27 +98,12 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                 }).addOnFailureListener(e -> {
                     showToast(e.getMessage());
                 });
-
-        firestore.collection(Constants.KEY_FRIEND)
-                .document(userCurrentID)
-                .collection(Constants.KEY_YOUR_FRIENDS)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                            listFriend.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
-                        }
-                    }
-                });
-
-
     }
-
 
     private void getUser(){
         if(listAiDoGuiDenBanLoiMoi != null
             || listBanGuiLoiKetBanDen != null
-                || listFriend != null){
+                || listMyFriend != null){
             firestore.collection(Constants.KEY_COLLECTION_USERS)
                     .get()
                     .addOnCompleteListener(task -> {
@@ -127,7 +111,7 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                                 if(userCurrentID.equals(queryDocumentSnapshot.getId())
                                         || listAiDoGuiDenBanLoiMoi.contains(queryDocumentSnapshot.getId())
-                                        || listFriend.contains(queryDocumentSnapshot.getId())
+                                        || listMyFriend.contains(queryDocumentSnapshot.getId())
                                         || listBanGuiLoiKetBanDen.contains(queryDocumentSnapshot.getId())){
                                     continue;
                                 }
@@ -235,14 +219,19 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void goProfilePersional(User user) {
+        goProfileActivity(user);
+    }
+
     private void showToast(String message){
         Toast.makeText(getActivity().getApplicationContext(),message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private void goProfileActivity(User user){
+        Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
+        intent.putExtra(Constants.KEY_USER_PROFILE,user);
+        startActivity(intent);
     }
 
 }
