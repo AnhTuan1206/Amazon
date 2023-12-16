@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.tuan.amazon.adapters.LoiMoiKetBanAdapter;
+import com.tuan.amazon.adapters.UserAdapter;
 import com.tuan.amazon.databinding.ActivityInviteAddFriendBinding;
-import com.tuan.amazon.listeners.ActivityInviteAddFr;
+import com.tuan.amazon.listeners.UserListener;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 import java.util.ArrayList;
@@ -23,12 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InviteAddFriendActivity extends AppCompatActivity implements ActivityInviteAddFr {
+public class InviteAddFriendActivity extends AppCompatActivity implements UserListener {
 
     private ActivityInviteAddFriendBinding binding;
     private FirebaseFirestore firestore;
     private List<User> list;
-    private LoiMoiKetBanAdapter adapter;
+//    private LoiMoiKetBanAdapter adapter;
+    private UserAdapter userAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +78,10 @@ public class InviteAddFriendActivity extends AppCompatActivity implements Activi
                             }
                         }
                         if (list.size() > 0) {
-                            adapter = new LoiMoiKetBanAdapter(list, this);
-                            binding.recyclerInviteAddFriend.setAdapter(adapter);
+//                            adapter = new LoiMoiKetBanAdapter(list, this);
+//                            binding.recyclerInviteAddFriend.setAdapter(adapter);
+                            userAdapter = new UserAdapter(list, 2, this);
+                            binding.recyclerInviteAddFriend.setAdapter(userAdapter);
                         }
                     }
                 });
@@ -104,6 +107,27 @@ public class InviteAddFriendActivity extends AppCompatActivity implements Activi
                     }
                 });
     }
+
+    @Override
+    public void inviteAddFriend(User user) {
+
+    }
+
+    @Override
+    public void huyGuiloiKetBan(User user) {
+
+    }
+
+    @Override
+    public void go(User user) {
+
+    }
+
+    @Override
+    public void goProfilePersional(User user) {
+
+    }
+
     @Override
     public void Accept(User user) {
         Map map = new HashMap();

@@ -61,9 +61,9 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
                 Map map = new HashMap();
                 String city = binding.etThemNoiSong.getText().toString();
                 String cheDo = binding.btnCheDoCongKhai.getText().toString();
-                map.put(Constants.KEY_CITY, city);
-                map.put(Constants.KEY_CHE_DO_CONG_KHAI, cheDo);
-                firestore.collection(Constants.KEY_Personal_information)
+                map.put(Constants.KEY_NOI_O, city);
+                map.put(Constants.KEY_CONG_KHAI_NOI_O, cheDo);
+                firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
                         .document(userCurrentID)
                         .set(map)
                         .addOnCompleteListener(task -> {

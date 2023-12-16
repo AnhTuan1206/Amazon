@@ -11,20 +11,20 @@ import android.view.MenuItem;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.tuan.amazon.R;
-import com.tuan.amazon.adapters.FriendAdapter;
+import com.tuan.amazon.adapters.UserAdapter;
 import com.tuan.amazon.databinding.ActivityFriendBinding;
+import com.tuan.amazon.listeners.UserListener;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendActivity extends AppCompatActivity {
+public class FriendActivity extends AppCompatActivity implements UserListener {
     private ActivityFriendBinding binding;
     private List<User> list;
-    private FriendAdapter adapter;
     private FirebaseFirestore firestore;
+    private UserAdapter userAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +71,42 @@ public class FriendActivity extends AppCompatActivity {
                             }
                         }
                         if(list.size() > 0){
-                            adapter = new FriendAdapter(list);
-                            binding.recyclerFriend.setAdapter(adapter);
+//                            adapter = new FriendAdapter(list);
+//                            binding.recyclerFriend.setAdapter(adapter);
+                            userAdapter = new UserAdapter(list,3, this);
+                            binding.recyclerFriend.setAdapter(userAdapter);
                         }
                     });
         }
+    }
+
+    @Override
+    public void inviteAddFriend(User user) {
+
+    }
+
+    @Override
+    public void huyGuiloiKetBan(User user) {
+
+    }
+
+    @Override
+    public void go(User user) {
+
+    }
+
+    @Override
+    public void goProfilePersional(User user) {
+
+    }
+
+    @Override
+    public void Accept(User user) {
+
+    }
+
+    @Override
+    public void Remove(User user) {
+
     }
 }

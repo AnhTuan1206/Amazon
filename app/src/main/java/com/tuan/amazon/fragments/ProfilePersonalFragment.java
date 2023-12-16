@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
 import com.tuan.amazon.activities.ProfileActivity;
@@ -83,6 +84,7 @@ public class ProfilePersonalFragment extends Fragment {
             binding.layoutMoiQuanHe.setEnabled(false);
         }
     }
+    
 
     private void loadImage(String image){
         byte[] bytes = Base64.decode(image, Base64.DEFAULT);

@@ -18,9 +18,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.tuan.amazon.activities.FriendActivity;
 import com.tuan.amazon.activities.InviteAddFriendActivity;
 import com.tuan.amazon.activities.ProfileActivity;
-import com.tuan.amazon.adapters.GoiYKetBanAdapter;
+import com.tuan.amazon.adapters.UserAdapter;
 import com.tuan.amazon.databinding.FragmentFriendBinding;
-import com.tuan.amazon.listeners.AdddFriendFMListener;
+import com.tuan.amazon.listeners.UserListener;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 import java.util.ArrayList;
@@ -29,13 +29,13 @@ import java.util.List;
 import java.util.Map;
 
 
-public class FriendFragment extends Fragment implements AdddFriendFMListener {
+public class FriendFragment extends Fragment implements UserListener {
 
     private FragmentFriendBinding binding;
     private View view;
     private FirebaseFirestore firestore;
     private List<User> list;
-    private GoiYKetBanAdapter adapter;
+    private UserAdapter userAdapter;
     public static List<String> listBanGuiLoiKetBanDen;
     public static List<String> listAiDoGuiDenBanLoiMoi;
 
@@ -122,8 +122,8 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                adapter = new GoiYKetBanAdapter(list, this);
-                                binding.recyclerListFriendFragment.setAdapter(adapter);
+                                userAdapter = new UserAdapter(list,1, this);
+                                binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }
                     });
@@ -144,8 +144,8 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                adapter = new GoiYKetBanAdapter(list, this);
-                                binding.recyclerListFriendFragment.setAdapter(adapter);
+                                userAdapter= new UserAdapter(list, 1, this);
+                                binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }
                     });
@@ -181,7 +181,7 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                     }
                 });
         user.setInviteAddFriend(true);
-        adapter.notifyDataSetChanged();
+        userAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -210,18 +210,28 @@ public class FriendFragment extends Fragment implements AdddFriendFMListener {
                     }
                 });
         user.setInviteAddFriend(false);
-        adapter.notifyDataSetChanged();
+        userAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void go(User user) {
         list.remove(user);
-        adapter.notifyDataSetChanged();
+        userAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void goProfilePersional(User user) {
         goProfileActivity(user);
+    }
+
+    @Override
+    public void Accept(User user) {
+
+    }
+
+    @Override
+    public void Remove(User user) {
+
     }
 
     private void showToast(String message){
