@@ -19,8 +19,8 @@ import com.tuan.amazon.activities.FriendActivity;
 import com.tuan.amazon.activities.InviteAddFriendActivity;
 import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.adapters.UserAdapter;
-import com.tuan.amazon.databinding.FragmentFriendBinding;
-import com.tuan.amazon.listeners.UserListener;
+import com.tuan.amazon.databinding.FragmentGoiYKetBanBinding;
+import com.tuan.amazon.listeners.GoiYKetBanListener;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public class FriendFragment extends Fragment implements UserListener {
+public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
 
-    private FragmentFriendBinding binding;
+    private FragmentGoiYKetBanBinding binding;
     private View view;
     private FirebaseFirestore firestore;
     private List<User> list;
@@ -49,7 +49,7 @@ public class FriendFragment extends Fragment implements UserListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentFriendBinding.inflate(inflater, container, false);
+        binding = FragmentGoiYKetBanBinding.inflate(inflater, container, false);
         eventClicks();
         view = binding.getRoot();
         return view;
@@ -122,7 +122,7 @@ public class FriendFragment extends Fragment implements UserListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                userAdapter = new UserAdapter(list,1, this);
+                                userAdapter = new UserAdapter(list,1, this, null, null);
                                 binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }
@@ -144,7 +144,7 @@ public class FriendFragment extends Fragment implements UserListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                userAdapter= new UserAdapter(list, 1, this);
+                                userAdapter= new UserAdapter(list, 1, this, null, null);
                                 binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }
@@ -214,7 +214,7 @@ public class FriendFragment extends Fragment implements UserListener {
     }
 
     @Override
-    public void go(User user) {
+    public void goKhoiDanhSach(User user) {
         list.remove(user);
         userAdapter.notifyDataSetChanged();
     }
@@ -224,15 +224,6 @@ public class FriendFragment extends Fragment implements UserListener {
         goProfileActivity(user);
     }
 
-    @Override
-    public void Accept(User user) {
-
-    }
-
-    @Override
-    public void Remove(User user) {
-
-    }
 
     private void showToast(String message){
         Toast.makeText(getActivity().getApplicationContext(),message, Toast.LENGTH_SHORT).show();

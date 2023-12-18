@@ -60,7 +60,7 @@
         tools:layout="@layout/activity_friend" />
     <fragment
         android:id="@+id/friendFragment"
-        android:name="com.tuan.amazon.fragments.FriendFragment"
+        android:name="com.tuan.amazon.fragments.GoiYKetBanFragment"
         android:label="fragment_friend"
-        tools:layout="@layout/fragment_friend" />
+        tools:layout="@layout/fragment_goi_y_ket_ban" />
 </navigation>

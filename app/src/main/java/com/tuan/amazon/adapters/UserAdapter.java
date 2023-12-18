@@ -7,11 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import com.tuan.amazon.databinding.ItemContainerFriendBinding;
 import com.tuan.amazon.databinding.ItemContainerLoimoikbBinding;
 import com.tuan.amazon.databinding.ItemContainerPeopleYouMayKnowBinding;
-import com.tuan.amazon.listeners.UserListener;
+import com.tuan.amazon.listeners.FriendListener;
+import com.tuan.amazon.listeners.GoiYKetBanListener;
+import com.tuan.amazon.listeners.LoiMoiKetBanListener;
 import com.tuan.amazon.models.User;
 
 import java.util.List;
@@ -19,13 +22,19 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<User> list;
-    private UserListener userListener;
+    private GoiYKetBanListener goiYKetBanListener;
+    private LoiMoiKetBanListener loiMoiKetBanListener;
+    private FriendListener friendListener;
     private int VIEW_TYPE ;
 
-    public UserAdapter(List<User> list, int VIEW_TYPE, UserListener userListener) {
+    public UserAdapter(List<User> list, int VIEW_TYPE, @Nullable GoiYKetBanListener goiYKetBanListener,
+                       @Nullable LoiMoiKetBanListener loiMoiKetBanListener,
+                       @Nullable FriendListener friendListener) {
         this.list = list;
         this.VIEW_TYPE = VIEW_TYPE;
-        this.userListener = userListener;
+        this.goiYKetBanListener = goiYKetBanListener;
+        this.loiMoiKetBanListener = loiMoiKetBanListener;
+        this.friendListener = friendListener;
     }
 
     @NonNull
@@ -82,18 +91,18 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             binding.imageProfile.setImageBitmap(setImage(user.getImage()));
 
             binding.btnAddFriend.setOnClickListener(v -> {
-                userListener.inviteAddFriend(user);
+                goiYKetBanListener.inviteAddFriend(user);
                 setBooleanForInviteAddFriend(user);
             });
             binding.btnCancel.setOnClickListener(V ->{
-                userListener.huyGuiloiKetBan(user);
+                goiYKetBanListener.huyGuiloiKetBan(user);
                 setBooleanForInviteAddFriend(user);
             });
             binding.btnGo.setOnClickListener(view -> {
-                userListener.go(user);
+               goiYKetBanListener.goKhoiDanhSach(user);
             });
             binding.imageProfile.setOnClickListener(v ->{
-                userListener.goProfilePersional(user);
+                goiYKetBanListener.goProfilePersional(user);
             });
         }
 
@@ -122,18 +131,22 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             binding.imageProfile.setImageBitmap(setImage(user.getImage()));
 
             binding.btnAccept.setOnClickListener(v -> {
-                userListener.Accept(user);
+                loiMoiKetBanListener.Accept(user);
                 binding.btnAccept.setVisibility(View.GONE);
                 binding.btnRemove.setVisibility(View.GONE);
                 binding.tvThongBao.setText("Đã xác nhận lời mời");
                 binding.tvThongBao.setVisibility(View.VISIBLE);
             });
             binding.btnRemove.setOnClickListener(v -> {
-               userListener.Remove(user);
+               loiMoiKetBanListener.Remove(user);
                 binding.btnAccept.setVisibility(View.GONE);
                 binding.btnRemove.setVisibility(View.GONE);
                 binding.tvThongBao.setText("Đã xoá lời mời");
                 binding.tvThongBao.setVisibility(View.VISIBLE);
+            });
+
+            binding.imageProfile.setOnClickListener(v ->{
+                loiMoiKetBanListener.goToProfile(user);
             });
         }
     }
@@ -150,7 +163,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             binding.imageProfile.setImageBitmap(setImage(user.getImage()));
 
             binding.imageProfile.setOnClickListener(v ->{
-                userListener.goProfilePersional(user);
+                friendListener.goToProfile(user);
             });
         }
     }

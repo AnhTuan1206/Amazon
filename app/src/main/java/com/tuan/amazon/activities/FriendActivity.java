@@ -6,6 +6,7 @@ import static com.tuan.amazon.activities.MainActivity.userCurrentName;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,14 +14,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.tuan.amazon.adapters.UserAdapter;
 import com.tuan.amazon.databinding.ActivityFriendBinding;
-import com.tuan.amazon.listeners.UserListener;
+import com.tuan.amazon.listeners.FriendListener;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendActivity extends AppCompatActivity implements UserListener {
+public class FriendActivity extends AppCompatActivity implements FriendListener {
     private ActivityFriendBinding binding;
     private List<User> list;
     private FirebaseFirestore firestore;
@@ -71,9 +72,7 @@ public class FriendActivity extends AppCompatActivity implements UserListener {
                             }
                         }
                         if(list.size() > 0){
-//                            adapter = new FriendAdapter(list);
-//                            binding.recyclerFriend.setAdapter(adapter);
-                            userAdapter = new UserAdapter(list,3, this);
+                            userAdapter = new UserAdapter(list,3, null, null, this);
                             binding.recyclerFriend.setAdapter(userAdapter);
                         }
                     });
@@ -81,32 +80,12 @@ public class FriendActivity extends AppCompatActivity implements UserListener {
     }
 
     @Override
-    public void inviteAddFriend(User user) {
-
+    public void goToProfile(User user) {
+        goProfileActivity(user);
     }
-
-    @Override
-    public void huyGuiloiKetBan(User user) {
-
-    }
-
-    @Override
-    public void go(User user) {
-
-    }
-
-    @Override
-    public void goProfilePersional(User user) {
-
-    }
-
-    @Override
-    public void Accept(User user) {
-
-    }
-
-    @Override
-    public void Remove(User user) {
-
+    private void goProfileActivity(User user){
+        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        intent.putExtra(Constants.KEY_USER_PROFILE,user);
+        startActivity(intent);
     }
 }

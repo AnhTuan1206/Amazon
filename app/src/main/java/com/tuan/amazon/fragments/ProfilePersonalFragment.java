@@ -84,6 +84,10 @@ public class ProfilePersonalFragment extends Fragment {
             binding.layoutMoiQuanHe.setEnabled(false);
         }
     }
+
+//    private void getDataForView(){
+//        firestore.collection()
+//    }
     
 
     private void loadImage(String image){

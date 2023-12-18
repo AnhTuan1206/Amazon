@@ -2,11 +2,12 @@ package com.tuan.amazon.activities;
 
 import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
-import static com.tuan.amazon.fragments.FriendFragment.listAiDoGuiDenBanLoiMoi;
+import static com.tuan.amazon.fragments.GoiYKetBanFragment.listAiDoGuiDenBanLoiMoi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.tuan.amazon.adapters.UserAdapter;
 import com.tuan.amazon.databinding.ActivityInviteAddFriendBinding;
-import com.tuan.amazon.listeners.UserListener;
+import com.tuan.amazon.listeners.LoiMoiKetBanListener;
 import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 import java.util.ArrayList;
@@ -23,12 +24,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InviteAddFriendActivity extends AppCompatActivity implements UserListener {
+public class InviteAddFriendActivity extends AppCompatActivity implements LoiMoiKetBanListener {
 
     private ActivityInviteAddFriendBinding binding;
     private FirebaseFirestore firestore;
     private List<User> list;
-//    private LoiMoiKetBanAdapter adapter;
     private UserAdapter userAdapter;
 
     @Override
@@ -80,7 +80,7 @@ public class InviteAddFriendActivity extends AppCompatActivity implements UserLi
                         if (list.size() > 0) {
 //                            adapter = new LoiMoiKetBanAdapter(list, this);
 //                            binding.recyclerInviteAddFriend.setAdapter(adapter);
-                            userAdapter = new UserAdapter(list, 2, this);
+                            userAdapter = new UserAdapter(list, 2, null,this, null);
                             binding.recyclerInviteAddFriend.setAdapter(userAdapter);
                         }
                     }
@@ -106,26 +106,6 @@ public class InviteAddFriendActivity extends AppCompatActivity implements UserLi
                                 .delete();
                     }
                 });
-    }
-
-    @Override
-    public void inviteAddFriend(User user) {
-
-    }
-
-    @Override
-    public void huyGuiloiKetBan(User user) {
-
-    }
-
-    @Override
-    public void go(User user) {
-
-    }
-
-    @Override
-    public void goProfilePersional(User user) {
-
     }
 
     @Override
@@ -162,5 +142,16 @@ public class InviteAddFriendActivity extends AppCompatActivity implements UserLi
     public void Remove(User user) {
         removeLoiMoiKB(user);
         listAiDoGuiDenBanLoiMoi.remove(user.getId());
+    }
+
+    @Override
+    public void goToProfile(User user) {
+        goProfileActivity(user);
+    }
+
+    private void goProfileActivity(User user){
+        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        intent.putExtra(Constants.KEY_USER_PROFILE,user);
+        startActivity(intent);
     }
 }

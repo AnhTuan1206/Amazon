@@ -40,5 +40,9 @@
     <string name="th_m_n_i_l_m_vi_c">Thêm nơi làm việc</string>
     <string name="t_n_n_i_l_m_vi_c">Tên nơi làm việc</string>
     <string name="th_m_qu_qu_n">Thêm quê quán</string>
+    <string name="c_ng_khai">Công khai</string>
+    <string name="b_t_k_ai_tr_n_ho_c_ngo_i_amazon">Bất kì ai ở trên hoặc ngoài Amazon</string>
+    <string name="b_n_b_c_a_b_n_tr_n_amazon">Bạn bè của bạn trên Amazon</string>
+    <string name="ch_m_nh_t_i">Chỉ mình tôi</string>
 
 </resources>
