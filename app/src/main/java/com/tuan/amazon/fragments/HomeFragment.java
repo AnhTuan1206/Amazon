@@ -33,18 +33,20 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private FirebaseFirestore firestore;
+    private String image;
+    private String name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        loadImageProfile();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        loadImageProfile();
         eventsClick();
         return binding.getRoot();
     }
@@ -59,8 +61,9 @@ public class HomeFragment extends Fragment {
                 .get()
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        String codeImageProfile = (String) task.getResult().get(Constants.KEY_USER_IMAGE);
-                        byte[] bytes = Base64.decode(codeImageProfile, Base64.DEFAULT);
+                        name = (String) task.getResult().get(Constants.KEY_NAME);
+                        image = (String) task.getResult().get(Constants.KEY_USER_IMAGE);
+                        byte[] bytes = Base64.decode(image, Base64.DEFAULT);
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         binding.imageProfile.setImageBitmap(bitmap);
                     }
@@ -75,7 +78,12 @@ public class HomeFragment extends Fragment {
 
     private void chuyenManHinh(){
         Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
-        intent.putExtra(Constants.KEY_CURRENT_USER_ID, userCurrentID);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_USER_ID, userCurrentID);
+        bundle.putString(Constants.KEY_NAME, name);
+//        intent.putExtra(Constants.KEY_CURRENT_USER_ID, userCurrentID);
+        bundle.putString(Constants.KEY_USER_IMAGE, image);
+        intent.putExtra(Constants.KEY_USER_PROFILE, bundle);
         startActivity(intent);
     }
 }

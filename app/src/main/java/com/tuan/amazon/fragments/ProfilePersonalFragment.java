@@ -4,12 +4,14 @@ import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +30,7 @@ public class ProfilePersonalFragment extends Fragment {
     private FragmentProfilePersonalBinding binding;
     private FirebaseFirestore firestore;
     private ProfileActivity profileActivity;
-    private String currentId ="";
-    private User user;
-    public ProfilePersonalFragment() {
-        // Required empty public constructor
-    }
-
+    private String usertId ="";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,25 +53,15 @@ public class ProfilePersonalFragment extends Fragment {
 
     private void getInitView(){
         profileActivity = (ProfileActivity) getActivity();
-        currentId = profileActivity.getCurrentUserId();
-        user = profileActivity.getUser();
-        if(currentId != null){
+        usertId = profileActivity.getId();
+        if(usertId.equals(userCurrentID)){
             binding.tvCountFriend2.setText(listMyFriend.size() + " bạn bè");
-            firestore.collection(Constants.KEY_COLLECTION_USERS)
-                    .document(currentId)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-                            binding.tvName.setText(task.getResult().getString(Constants.KEY_NAME));
-                            String image = task.getResult().getString(Constants.KEY_USER_IMAGE);
-                            if(image!= null){
-                                loadImage(image);
-                            }
-                        }
-                    });
-        } else if(user != null){
-            binding.tvName.setText(user.getName());
-            loadImage(user.getImage());
+            binding.tvName.setText(profileActivity.getName());
+            loadImage(profileActivity.getImage());
+
+        } else {
+            binding.tvName.setText(profileActivity.getName());
+            loadImage(profileActivity.getImage());
             binding.tvCountFriend2.setVisibility(View.GONE);
             binding.btnAddTin.setVisibility(View.GONE);
             binding.btnSettingPersonalPage.setVisibility(View.GONE);
@@ -85,10 +72,27 @@ public class ProfilePersonalFragment extends Fragment {
         }
     }
 
-//    private void getDataForView(){
-//        firestore.collection()
-//    }
-    
+    private void getDataProfileNoiO(String id){
+        firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
+                .document(id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        if(id.equals(userCurrentID)){
+                            if(task.getResult().get(Constants.KEY_NOI_O) != null){
+                                binding.tvNoiSong.setText(task.getResult().get(Constants.KEY_NOI_O).toString());
+                            }
+                            if(task.getResult().get(Constants.KEY_NOI_LAM_VIEC) != null){
+                                binding.tvNoiLamViec.setText(task.getResult().get(Constants.KEY_NOI_LAM_VIEC).toString());
+                            }
+                            if(task.getResult().get(Constants.KEY_HOME_TOWN) != null){
+                                binding.tvQueQuan.setText(task.getResult().get(Constants.KEY_HOME_TOWN).toString());
+                            }
+                        }
+                    }
+                });
+    }
+
 
     private void loadImage(String image){
         byte[] bytes = Base64.decode(image, Base64.DEFAULT);

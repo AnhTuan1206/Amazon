@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutCongKhai"
@@ -39,7 +39,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutFriend"
+        android:id="@+id/layoutFriend1"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -82,7 +82,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/_5sdp"
-            android:background="@drawable/ic_only_me"
+            android:background="@drawable/ic_only_me_bigger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView

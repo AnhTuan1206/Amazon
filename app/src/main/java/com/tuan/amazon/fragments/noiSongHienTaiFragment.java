@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
 import com.tuan.amazon.databinding.FragmentNoiSongHienTaiBinding;
@@ -28,9 +29,6 @@ import java.util.Map;
 
 
 public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
-    public noiSongHienTaiFragment() {
-    }
-
     private FragmentNoiSongHienTaiBinding binding;
     private FirebaseFirestore firestore;
     @Override
@@ -44,7 +42,7 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
                              Bundle savedInstanceState) {
         binding = FragmentNoiSongHienTaiBinding.inflate(inflater, null, false);
         initView();
-        evnetsClick();
+        eventsClick();
         return binding.getRoot();
     }
 
@@ -56,29 +54,52 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
         binding.etThemNoiSong.addTextChangedListener(this);
     }
 
-    private void evnetsClick(){
+    private void eventsClick(){
         binding.btnSave.setOnClickListener(v -> {
                 Map map = new HashMap();
-                String city = binding.etThemNoiSong.getText().toString();
-                String cheDo = binding.btnCheDoCongKhai.getText().toString();
-                map.put(Constants.KEY_NOI_O, city);
-                map.put(Constants.KEY_CONG_KHAI_NOI_O, cheDo);
+                map.put(Constants.KEY_NOI_O, binding.etThemNoiSong.getText().toString());
+                map.put(Constants.KEY_CONG_KHAI_NOI_O, binding.btnCheDoCongKhai.getText().toString());
                 firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
+                        .document(userCurrentID)
+                        .collection(Constants.KEY_NOI_O)
                         .document(userCurrentID)
                         .set(map)
                         .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()){
-                                Toast.makeText(getContext(),"Thêm tỉnh/thành phố hiện tại thành công", Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(getContext(), "Thêm thông tin nơi sống hiện tại thành công", Toast.LENGTH_SHORT).show();
                         });
+
             });
 
         binding.btnCheDoCongKhai.setOnClickListener(v ->{
-
+            dieuChinhCongKhai();
         });
 
         binding.btnBack.setOnClickListener(v ->{
-            Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
+//            Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
+        });
+    }
+
+    private void dieuChinhCongKhai(){
+        View view = getLayoutInflater().inflate(R.layout.layout_bottom_sheet_congkhai, null);
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(view.getContext());
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+
+        view.findViewById(R.id.layoutOnlyMe).setOnClickListener(v ->{
+            bottomSheetDialog.dismiss();
+            binding.btnCheDoCongKhai.setText(Constants.KEY_CDCK_MINH_TOI);
+            binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_only_me,0,R.drawable.ic_down,0);
+
+        });
+        view.findViewById(R.id.layoutCongKhai).setOnClickListener(v ->{
+            bottomSheetDialog.dismiss();
+            binding.btnCheDoCongKhai.setText(Constants.KEY_CDCK_CONG_KHAI);
+            binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_public, 0, R.drawable.ic_down, 0);
+        });
+        view.findViewById(R.id.layoutFriend1).setOnClickListener(v ->{
+            bottomSheetDialog.dismiss();
+            binding.btnCheDoCongKhai.setText(Constants.KEY_CDCK_BAN_BE);
+            binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_relationship, 0, R.drawable.ic_down, 0);
         });
     }
 

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         userCurrentID = firebaseUser.getUid();
-        userCurrentName = firebaseUser.getDisplayName();
+//        userCurrentName = firebaseUser.getDisplayName();
         listMyFriend = new ArrayList<>();
         getData();
     }

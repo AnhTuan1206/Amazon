@@ -231,7 +231,11 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
 
     private void goProfileActivity(User user){
         Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
-        intent.putExtra(Constants.KEY_USER_PROFILE,user);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_USER_ID, user.getId());
+        bundle.putString(Constants.KEY_USER_IMAGE, user.getImage());
+        bundle.putString(Constants.KEY_NAME, user.getName());
+        intent.putExtra(Constants.KEY_USER_PROFILE, bundle);
         startActivity(intent);
     }
 

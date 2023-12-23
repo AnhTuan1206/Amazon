@@ -85,7 +85,12 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
     }
     private void goProfileActivity(User user){
         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-        intent.putExtra(Constants.KEY_USER_PROFILE,user);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_USER_ID, user.getId());
+        bundle.putString(Constants.KEY_USER_IMAGE, user.getImage());
+        bundle.putString(Constants.KEY_NAME, user.getName());
+        intent.putExtra(Constants.KEY_USER_PROFILE, bundle);
+//        intent.putExtra(Constants.KEY_USER_PROFILE,user);
         startActivity(intent);
     }
 }
