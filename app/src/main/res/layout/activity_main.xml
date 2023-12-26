@@ -22,7 +22,6 @@
             android:textColor="@color/nameApp"
             android:textSize="@dimen/_25sdp"
             android:textStyle="bold" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btnAddMain"
             android:layout_marginStart="@dimen/_110sdp"

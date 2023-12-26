@@ -32,7 +32,6 @@ import java.util.Map;
 public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
 
     private FragmentGoiYKetBanBinding binding;
-    private View view;
     private FirebaseFirestore firestore;
     private List<User> list;
     private UserAdapter userAdapter;
@@ -51,8 +50,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                              Bundle savedInstanceState) {
         binding = FragmentGoiYKetBanBinding.inflate(inflater, container, false);
         eventClicks();
-        view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
     private void eventClicks(){
@@ -81,8 +79,6 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                             listBanGuiLoiKetBanDen.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
                         }
                     }
-                }).addOnFailureListener(e -> {
-                    showToast(e.getMessage());
                 });
 
         firestore.collection(Constants.KEY_LMKB)
@@ -95,8 +91,6 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                             listAiDoGuiDenBanLoiMoi.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
                         }
                     }
-                }).addOnFailureListener(e -> {
-                    showToast(e.getMessage());
                 });
     }
 
@@ -201,7 +195,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                                 .delete()
                                 .addOnCompleteListener(task1 -> {
                                     if(task.isSuccessful()){
-                                        showToast("Đả huỷ lời mời kết bạn với: "+user.getName());
+                                        showToast("Đã huỷ lời mời kết bạn với: "+user.getName());
                                     }
                                     else {
                                         showToast("Huỷ lời mời kết bạn với: "+user.getName()+" không thành công");

@@ -1,9 +1,8 @@
 package com.tuan.amazon.models;
 
 
-import java.io.Serializable;
 
-public class User implements Serializable {
+public class User  {
 
     private String name;
     private String id;

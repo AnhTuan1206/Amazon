@@ -155,7 +155,6 @@ public class InviteAddFriendActivity extends AppCompatActivity implements LoiMoi
         bundle.putString(Constants.KEY_USER_ID, user.getId());
         bundle.putString(Constants.KEY_USER_IMAGE, user.getImage());
         bundle.putString(Constants.KEY_NAME, user.getName());
-//        intent.putExtra(Constants.KEY_USER_PROFILE,user);
         intent.putExtra(Constants.KEY_USER_PROFILE, bundle);
         startActivity(intent);
     }

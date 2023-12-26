@@ -31,8 +31,8 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
         super.onCreate(savedInstanceState);
         binding = ActivityFriendBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initView();
         init();
+        initView();
     }
 
     private void initView(){
@@ -66,6 +66,7 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
                                     User user = new User();
                                     user.setName(queryDocumentSnapshot.getString(Constants.KEY_NAME));
                                     user.setImage(queryDocumentSnapshot.getString(Constants.KEY_USER_IMAGE));
+                                    user.setId(queryDocumentSnapshot.getId());
                                     list.add(user);
                                     count++;
                                 }
@@ -84,13 +85,13 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
         goProfileActivity(user);
     }
     private void goProfileActivity(User user){
-        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        Intent intent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.KEY_USER_ID, user.getId());
         bundle.putString(Constants.KEY_USER_IMAGE, user.getImage());
         bundle.putString(Constants.KEY_NAME, user.getName());
         intent.putExtra(Constants.KEY_USER_PROFILE, bundle);
-//        intent.putExtra(Constants.KEY_USER_PROFILE,user);
         startActivity(intent);
+
     }
 }

@@ -4,7 +4,6 @@ package com.tuan.amazon.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Menu;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MainAdapterViewPager2 mainAdapterViewPager2;
     private FirebaseFirestore firestore;
-    private FirebaseAuth firebaseAuth;
     public static String userCurrentID;
     public static String userCurrentName;
     public static List<String> listMyFriend;
@@ -37,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
+
     }
+
 
     private void init(){
         mainAdapterViewPager2 = new MainAdapterViewPager2(this);
@@ -56,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
         }).attach();
 
         firestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         userCurrentID = firebaseUser.getUid();
-//        userCurrentName = firebaseUser.getDisplayName();
         listMyFriend = new ArrayList<>();
         getData();
     }

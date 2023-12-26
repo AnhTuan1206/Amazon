@@ -4,7 +4,6 @@ import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,12 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
 import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.databinding.FragmentProfilePersonalBinding;
-import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 
 
@@ -29,8 +26,7 @@ public class ProfilePersonalFragment extends Fragment {
    
     private FragmentProfilePersonalBinding binding;
     private FirebaseFirestore firestore;
-    private ProfileActivity profileActivity;
-    private String usertId ="";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +46,13 @@ public class ProfilePersonalFragment extends Fragment {
         firestore = FirebaseFirestore.getInstance();
     }
 
-
     private void getInitView(){
-        profileActivity = (ProfileActivity) getActivity();
-        usertId = profileActivity.getId();
-        if(usertId.equals(userCurrentID)){
+        ProfileActivity profileActivity = (ProfileActivity) getActivity();
+        String userId = profileActivity.getId();
+        if(userCurrentID.equals(userId)){
             binding.tvCountFriend2.setText(listMyFriend.size() + " bạn bè");
             binding.tvName.setText(profileActivity.getName());
             loadImage(profileActivity.getImage());
-
         } else {
             binding.tvName.setText(profileActivity.getName());
             loadImage(profileActivity.getImage());
@@ -70,25 +64,91 @@ public class ProfilePersonalFragment extends Fragment {
             binding.layoutNoiLamViec.setEnabled(false);
             binding.layoutMoiQuanHe.setEnabled(false);
         }
+        getDataProfileNoiSong(userId);
+        getDataProfileNoiLamViec(userId);
+        getDataProfileQueQuan(userId);
     }
 
-    private void getDataProfileNoiO(String id){
+    private void getDataProfileNoiSong(String id){
         firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
+                .document(id)
+                .collection(Constants.KEY_NOI_O)
                 .document(id)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        if(id.equals(userCurrentID)){
-                            if(task.getResult().get(Constants.KEY_NOI_O) != null){
-                                binding.tvNoiSong.setText(task.getResult().get(Constants.KEY_NOI_O).toString());
-                            }
-                            if(task.getResult().get(Constants.KEY_NOI_LAM_VIEC) != null){
-                                binding.tvNoiLamViec.setText(task.getResult().get(Constants.KEY_NOI_LAM_VIEC).toString());
-                            }
-                            if(task.getResult().get(Constants.KEY_HOME_TOWN) != null){
-                                binding.tvQueQuan.setText(task.getResult().get(Constants.KEY_HOME_TOWN).toString());
+                    if(task.isSuccessful() && task.getResult().get(Constants.KEY_NOI_O) != null){
+                        if(userCurrentID.equals(id)){
+                            binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().get(Constants.KEY_NOI_O));
+                        }else {
+                            switch (task.getResult().get(Constants.KEY_CONG_KHAI_NOI_O).toString()){
+                                case Constants.KEY_CDCK_CONG_KHAI:
+                                    binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().get(Constants.KEY_NOI_O));
+                                    break;
+                                case Constants.KEY_CDCK_BAN_BE:
+                                    if(listMyFriend.contains(id)){
+                                        binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().get(Constants.KEY_NOI_O));
+                                        break;
+                                      }
+
                             }
                         }
+
+                    }
+
+                });
+    }
+
+    private void getDataProfileNoiLamViec(String id){
+        firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
+                .document(id)
+                .collection(Constants.KEY_NOI_LAM_VIEC)
+                .document(id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()  && task.getResult().get(Constants.KEY_NOI_LAM_VIEC) != null){
+                            if(userCurrentID.equals(id)){
+                                binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                            }else
+                            {
+                                switch (task.getResult().get(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC).toString()){
+                                    case Constants.KEY_CDCK_CONG_KHAI:
+                                        binding.tvNoiSong.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                                        break;
+                                    case Constants.KEY_CDCK_BAN_BE:
+                                        if(listMyFriend.contains(id)){
+                                            binding.tvNoiSong.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                                            break;
+                                        }
+                                }
+                            }
+
+                    }
+                });
+    }
+
+    private void getDataProfileQueQuan(String id){
+        firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
+                .document(id)
+                .collection(Constants.KEY_HOME_TOWN)
+                .document(id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult().get(Constants.KEY_HOME_TOWN) != null){
+                            if(userCurrentID.equals(id)){
+                                binding.tvQueQuan.setText("Quê quán tại " + task.getResult().get(Constants.KEY_HOME_TOWN));
+                            }else
+                            {
+                                switch (task.getResult().get(Constants.KEY_CONG_KHAI_HOME_TOWN).toString()){
+                                    case Constants.KEY_CDCK_CONG_KHAI:
+                                        binding.tvQueQuan.setText("Quê quán tại " + task.getResult().get(Constants.KEY_HOME_TOWN));
+                                        break;
+                                    case Constants.KEY_CDCK_BAN_BE:
+                                        if(listMyFriend.contains(id)){
+                                            binding.tvQueQuan.setText("Quê quán tại " + task.getResult().get(Constants.KEY_HOME_TOWN));
+                                            break;
+                                        }
+                                }
+                            }
                     }
                 });
     }

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.tuan.amazon.databinding.ActivityProfileBinding;
-import com.tuan.amazon.models.User;
 import com.tuan.amazon.utilities.Constants;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -31,21 +30,16 @@ public class ProfileActivity extends AppCompatActivity {
         userId = bundle.getString(Constants.KEY_USER_ID);
         image = bundle.getString(Constants.KEY_USER_IMAGE);
         name = bundle.getString(Constants.KEY_NAME);
-//        userId = intent.getStringExtra(Constants.KEY_CURRENT_USER_ID);
-//        user = (User) intent.getSerializableExtra(Constants.KEY_USER_PROFILE);
     }
 
     public String getId(){
         return userId;
     }
-
     public String getImage(){
         return image;
     }
-
     public String getName(){
         return name;
     }
-
 
 }

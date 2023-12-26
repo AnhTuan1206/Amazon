@@ -58,7 +58,7 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
         });
 
         binding.btnSave.setOnClickListener(v ->{
-            Map map = new HashMap();
+            Map<String, Object> map = new HashMap<>();
             map.put(Constants.KEY_HOME_TOWN, binding.etQueQUan.getText().toString());
             map.put(Constants.KEY_CONG_KHAI_HOME_TOWN, binding.btnCheDoCongKhai.getText().toString());
             firestore.collection(Constants.KEY_PERSONAL_INFORMATION)

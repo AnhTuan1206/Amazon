@@ -21,9 +21,8 @@ public class Constants {
     public static final String KEY_CONG_KHAI_HOME_TOWN = "congKhaiHomeTown";
     public static final String KEY_CONG_KHAI_NOI_LAM_VIEC = "congKhaiNoiLamViec";
     public static final String KEY_CONG_KHAI_MOI_QUAN_HE = "congKhaiMOIQH";
-//    public static final String KEY_CURRENT_USER_ID= "currentUserId";
     public static final String KEY_USER_PROFILE = "userProfile";
-    public static final String KEY_CDCK_CONG_KHAI = " Công Khai ";
-    public static final String KEY_CDCK_BAN_BE = " Bạn Bè ";
-    public static final String KEY_CDCK_MINH_TOI = " Chỉ Mình Tôi ";
+    public static final String KEY_CDCK_CONG_KHAI = " Công khai ";
+    public static final String KEY_CDCK_BAN_BE = " Bạn bè ";
+    public static final String KEY_CDCK_MINH_TOI = " Chỉ mình tôi ";
 }
