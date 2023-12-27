@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
 import com.tuan.amazon.databinding.FragmentWorkPlaceBinding;
 import com.tuan.amazon.utilities.Constants;
+import com.tuan.amazon.utilities.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +32,8 @@ import java.util.Map;
 public class WorkPlaceFragment extends Fragment implements TextWatcher {
 
     private FragmentWorkPlaceBinding binding;
-
     private FirebaseFirestore firestore;
+    private PreferenceManager preferenceManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,28 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
         return binding.getRoot();
     }
 
+    private void init(){
+        firestore = FirebaseFirestore.getInstance();
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+    }
+
+    private void initView(){
+        binding.etThemNoiLamViec.setText(preferenceManager.getString(Constants.KEY_NOI_LAM_VIEC));
+        binding.btnCheDoCongKhai.setText(preferenceManager.getString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC));
+
+        switch (preferenceManager.getString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC)){
+            case Constants.KEY_CDCK_BAN_BE:
+                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_relationship, 0, R.drawable.ic_down, 0);
+                break;
+            case Constants.KEY_CDCK_MINH_TOI:
+                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_only_me,0,R.drawable.ic_down,0);
+                break;
+        }
+
+        binding.etThemNoiLamViec.addTextChangedListener(this);
+        binding.btnCheDoCongKhai.addTextChangedListener(this);
+    }
+
     private void eventsClick(){
         binding.btnBack.setOnClickListener(v ->{
             Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
@@ -56,7 +79,7 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
 
         binding.btnSave.setOnClickListener(v ->{
             Map map = new HashMap();
-            map.put(Constants.KEY_NOI_LAM_VIEC, binding.etThemNoiSong.getText().toString());
+            map.put(Constants.KEY_NOI_LAM_VIEC, binding.etThemNoiLamViec.getText().toString());
             map.put(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC, binding.btnCheDoCongKhai.getText().toString());
             firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
                     .document(userCurrentID)
@@ -99,13 +122,8 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
         });
     }
 
-    private void init(){
-        firestore = FirebaseFirestore.getInstance();
-    }
 
-    private void initView(){
-        binding.etThemNoiSong.addTextChangedListener(this);
-    }
+
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,11 +137,12 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if(!binding.etThemNoiSong.getText().toString().trim().isEmpty()){
+        if(!binding.etThemNoiLamViec.getText().toString().equals(Constants.KEY_NOI_LAM_VIEC)
+        || !binding.btnCheDoCongKhai.getText().toString().equals(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC)){
             binding.btnSave.setTextColor(Color.WHITE);
             binding.btnSave.setBackgroundColor(Color.BLUE);
             binding.btnSave.setEnabled(true);
-        } else if(binding.etThemNoiSong.getText().toString().trim().isEmpty()){
+        } else if(binding.etThemNoiLamViec.getText().toString().trim().isEmpty()){
             binding.btnSave.setTextColor(Color.GRAY);
             Resources res = getResources();
             Drawable drawable = ResourcesCompat.getDrawable(res, R.drawable.background_btn_whiter, null);

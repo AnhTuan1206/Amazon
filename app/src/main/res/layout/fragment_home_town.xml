@@ -62,7 +62,6 @@
         android:padding="@dimen/_5sdp"
         android:layout_margin="@dimen/_10sdp"
         android:id="@+id/btnCheDoCongKhai"
-        android:text=" Công khai "
         android:background="@drawable/background_btn_whiter"
         android:drawableLeft="@drawable/ic_public"
         android:drawableRight="@drawable/ic_down"

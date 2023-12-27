@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
 import com.tuan.amazon.databinding.FragmentHomeTownBinding;
 import com.tuan.amazon.utilities.Constants;
+import com.tuan.amazon.utilities.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
 
     private FragmentHomeTownBinding binding;
     private FirebaseFirestore firestore;
+    private PreferenceManager preferenceManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,24 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
 
     private void init(){
         firestore = FirebaseFirestore.getInstance();
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+    }
+
+    private void initView(){
+        binding.etQueQUan.setText(preferenceManager.getString(Constants.KEY_HOME_TOWN));
+        binding.btnCheDoCongKhai.setText(preferenceManager.getString(Constants.KEY_CONG_KHAI_HOME_TOWN));
+
+        switch (preferenceManager.getString(Constants.KEY_CONG_KHAI_HOME_TOWN)){
+            case Constants.KEY_CDCK_BAN_BE:
+                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_relationship, 0, R.drawable.ic_down, 0);
+                break;
+            case Constants.KEY_CDCK_MINH_TOI:
+                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_only_me,0,R.drawable.ic_down,0);
+                break;
+        }
+
+        binding.etQueQUan.addTextChangedListener(this);
+        binding.btnCheDoCongKhai.addTextChangedListener(this);
     }
 
     private void eventsClick(){
@@ -103,9 +123,6 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
         });
     }
 
-    private void initView(){
-        binding.etQueQUan.addTextChangedListener(this);
-    }
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,7 +136,8 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if(!binding.etQueQUan.getText().toString().trim().isEmpty()){
+        if(!binding.etQueQUan.getText().toString().equals(preferenceManager.getString(Constants.KEY_HOME_TOWN))
+        || !binding.btnCheDoCongKhai.getText().equals(preferenceManager.getString(Constants.KEY_CONG_KHAI_HOME_TOWN))){
             binding.btnSave.setTextColor(Color.WHITE);
             binding.btnSave.setBackgroundColor(Color.BLUE);
             binding.btnSave.setEnabled(true);

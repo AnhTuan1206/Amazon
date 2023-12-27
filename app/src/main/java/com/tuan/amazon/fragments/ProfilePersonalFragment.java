@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,14 @@ import com.tuan.amazon.R;
 import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.databinding.FragmentProfilePersonalBinding;
 import com.tuan.amazon.utilities.Constants;
+import com.tuan.amazon.utilities.PreferenceManager;
 
 
 public class ProfilePersonalFragment extends Fragment {
    
     private FragmentProfilePersonalBinding binding;
     private FirebaseFirestore firestore;
-
+    private PreferenceManager preferenceManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class ProfilePersonalFragment extends Fragment {
 
     private void init(){
         firestore = FirebaseFirestore.getInstance();
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
     }
 
     private void getInitView(){
@@ -79,6 +80,8 @@ public class ProfilePersonalFragment extends Fragment {
                     if(task.isSuccessful() && task.getResult().get(Constants.KEY_NOI_O) != null){
                         if(userCurrentID.equals(id)){
                             binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().get(Constants.KEY_NOI_O));
+                            preferenceManager.putString(Constants.KEY_NOI_O, task.getResult().get(Constants.KEY_NOI_O).toString());
+                            preferenceManager.putString(Constants.KEY_CONG_KHAI_NOI_O, task.getResult().get(Constants.KEY_CONG_KHAI_NOI_O).toString());
                         }else {
                             switch (task.getResult().get(Constants.KEY_CONG_KHAI_NOI_O).toString()){
                                 case Constants.KEY_CDCK_CONG_KHAI:
@@ -108,15 +111,17 @@ public class ProfilePersonalFragment extends Fragment {
                     if(task.isSuccessful()  && task.getResult().get(Constants.KEY_NOI_LAM_VIEC) != null){
                             if(userCurrentID.equals(id)){
                                 binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                                preferenceManager.putString(Constants.KEY_NOI_LAM_VIEC, task.getResult().get(Constants.KEY_NOI_LAM_VIEC).toString());
+                                preferenceManager.putString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC, task.getResult().get(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC).toString());
                             }else
                             {
                                 switch (task.getResult().get(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC).toString()){
                                     case Constants.KEY_CDCK_CONG_KHAI:
-                                        binding.tvNoiSong.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                                        binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
                                         break;
                                     case Constants.KEY_CDCK_BAN_BE:
                                         if(listMyFriend.contains(id)){
-                                            binding.tvNoiSong.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                                            binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
                                             break;
                                         }
                                 }
@@ -136,6 +141,8 @@ public class ProfilePersonalFragment extends Fragment {
                     if(task.isSuccessful() && task.getResult().get(Constants.KEY_HOME_TOWN) != null){
                             if(userCurrentID.equals(id)){
                                 binding.tvQueQuan.setText("Quê quán tại " + task.getResult().get(Constants.KEY_HOME_TOWN));
+                                preferenceManager.putString(Constants.KEY_HOME_TOWN, task.getResult().get(Constants.KEY_HOME_TOWN).toString());
+                                preferenceManager.putString(Constants.KEY_CONG_KHAI_HOME_TOWN, task.getResult().get(Constants.KEY_CONG_KHAI_HOME_TOWN).toString());
                             }else
                             {
                                 switch (task.getResult().get(Constants.KEY_CONG_KHAI_HOME_TOWN).toString()){

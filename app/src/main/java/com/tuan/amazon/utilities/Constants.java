@@ -25,4 +25,5 @@ public class Constants {
     public static final String KEY_CDCK_CONG_KHAI = " Công khai ";
     public static final String KEY_CDCK_BAN_BE = " Bạn bè ";
     public static final String KEY_CDCK_MINH_TOI = " Chỉ mình tôi ";
+    public static final String KEY_PREFERENCE_NAME = "preference";
 }

@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <EditText
-            android:id="@+id/etThemNoiSong"
+            android:id="@+id/etThemNoiLamViec"
             android:hint="@string/t_n_n_i_l_m_vi_c"
             android:layout_marginLeft="@dimen/_5sdp"
             android:textSize="@dimen/_15ssp"
@@ -62,7 +62,6 @@
         android:padding="@dimen/_5sdp"
         android:layout_margin="@dimen/_10sdp"
         android:id="@+id/btnCheDoCongKhai"
-        android:text=" Công khai "
         android:background="@drawable/background_btn_whiter"
         android:drawableLeft="@drawable/ic_public"
         android:drawableRight="@drawable/ic_down"
