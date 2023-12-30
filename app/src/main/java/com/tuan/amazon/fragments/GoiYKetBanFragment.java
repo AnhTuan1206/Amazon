@@ -74,7 +74,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                 .collection(Constants.KEY_GD)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
+                    if(task.isSuccessful() && task.getResult() != null){
                         for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                             listBanGuiLoiKetBanDen.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
                         }
@@ -86,7 +86,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                 .collection(Constants.KEY_NG)
                 .get()
                 .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
+                    if(task.isSuccessful() && task.getResult() != null){
                         for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                             listAiDoGuiDenBanLoiMoi.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
                         }

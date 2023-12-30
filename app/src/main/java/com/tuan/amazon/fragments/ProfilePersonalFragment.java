@@ -2,6 +2,8 @@ package com.tuan.amazon.fragments;
 
 import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
+import com.tuan.amazon.activities.ChatActivity;
 import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.databinding.FragmentProfilePersonalBinding;
 import com.tuan.amazon.utilities.Constants;
@@ -64,6 +67,10 @@ public class ProfilePersonalFragment extends Fragment {
             binding.layoutQueQuan.setEnabled(false);
             binding.layoutNoiLamViec.setEnabled(false);
             binding.layoutMoiQuanHe.setEnabled(false);
+            binding.btnChat.setVisibility(View.VISIBLE);
+            if(!listMyFriend.contains(userId)){
+                binding.btnaddFriend.setVisibility(View.VISIBLE);
+            }
         }
         getDataProfileNoiSong(userId);
         getDataProfileNoiLamViec(userId);
@@ -168,6 +175,9 @@ public class ProfilePersonalFragment extends Fragment {
     }
 
     private void eventsClick() {
+        binding.btnChat.setOnClickListener(view -> {
+            startActivity(new Intent(getActivity().getApplicationContext(), ChatActivity.class));
+        });
         binding.layoutNoiSong.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.noiSongHienTaiFragment);
         });
