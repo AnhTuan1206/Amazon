@@ -80,7 +80,7 @@ public class InviteAddFriendActivity extends AppCompatActivity implements LoiMoi
                         if (list.size() > 0) {
 //                            adapter = new LoiMoiKetBanAdapter(list, this);
 //                            binding.recyclerInviteAddFriend.setAdapter(adapter);
-                            userAdapter = new UserAdapter(list, 2, null,this, null);
+                            userAdapter = new UserAdapter(list, 2, null,this, null, null);
                             binding.recyclerInviteAddFriend.setAdapter(userAdapter);
                         }
                     }

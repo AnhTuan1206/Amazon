@@ -116,7 +116,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                userAdapter = new UserAdapter(list,1, this, null, null);
+                                userAdapter = new UserAdapter(list,1, this, null, null, null);
                                 binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }
@@ -138,7 +138,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                userAdapter= new UserAdapter(list, 1, this, null, null);
+                                userAdapter= new UserAdapter(list, 1, this, null, null, null);
                                 binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }

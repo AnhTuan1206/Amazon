@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.tuan.amazon.R;
 import com.tuan.amazon.databinding.ItemContainerFriendBinding;
+import com.tuan.amazon.databinding.ItemContainerListUserToChatBinding;
 import com.tuan.amazon.databinding.ItemContainerLoimoikbBinding;
 import com.tuan.amazon.databinding.ItemContainerPeopleYouMayKnowBinding;
+import com.tuan.amazon.listeners.DanhSachBanBeDeChatListener;
 import com.tuan.amazon.listeners.FriendListener;
 import com.tuan.amazon.listeners.GoiYKetBanListener;
 import com.tuan.amazon.listeners.LoiMoiKetBanListener;
@@ -25,16 +29,19 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private GoiYKetBanListener goiYKetBanListener;
     private LoiMoiKetBanListener loiMoiKetBanListener;
     private FriendListener friendListener;
+    private DanhSachBanBeDeChatListener danhSachBanBeDeChat;
     private int VIEW_TYPE ;
 
     public UserAdapter(List<User> list, int VIEW_TYPE, @Nullable GoiYKetBanListener goiYKetBanListener,
                        @Nullable LoiMoiKetBanListener loiMoiKetBanListener,
-                       @Nullable FriendListener friendListener) {
+                       @Nullable FriendListener friendListener,
+                       @Nullable DanhSachBanBeDeChatListener danhSachBanBeDeChat) {
         this.list = list;
         this.VIEW_TYPE = VIEW_TYPE;
         this.goiYKetBanListener = goiYKetBanListener;
         this.loiMoiKetBanListener = loiMoiKetBanListener;
         this.friendListener = friendListener;
+        this.danhSachBanBeDeChat = danhSachBanBeDeChat;
     }
 
     @NonNull
@@ -48,6 +55,11 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 ));
             case 2:
                 return new LoiMoiKetBan(ItemContainerLoimoikbBinding.inflate(
+                        LayoutInflater.from(parent.getContext())
+                        , parent, false
+                ));
+            case 4:
+                return new DanhSachBanBeDeChat(ItemContainerListUserToChatBinding.inflate(
                         LayoutInflater.from(parent.getContext())
                         , parent, false
                 ));
@@ -70,6 +82,9 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 break;
             case 3:
                 ((BanBe) holder).setData(list.get(position));
+                break;
+            case 4:
+                ((DanhSachBanBeDeChat) holder).setData(list.get(position));
                 break;
         }
     }
@@ -164,6 +179,22 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             binding.imageProfile.setOnClickListener(v ->{
                 friendListener.goToProfile(user);
+            });
+        }
+    }
+
+    class DanhSachBanBeDeChat extends RecyclerView.ViewHolder{
+        private ItemContainerListUserToChatBinding binding;
+        public DanhSachBanBeDeChat(ItemContainerListUserToChatBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+        void setData(User user){
+            binding.tvName.setText(user.getName());
+            binding.img.setImageBitmap(setImage(user.getImage()));
+
+            binding.img.setOnClickListener( view -> {
+                danhSachBanBeDeChat.goToChat(user);
             });
         }
     }

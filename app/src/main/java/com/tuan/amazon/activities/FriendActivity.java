@@ -73,7 +73,7 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
                             }
                         }
                         if(list.size() > 0){
-                            userAdapter = new UserAdapter(list,3, null, null, this);
+                            userAdapter = new UserAdapter(list,3, null, null, this, null);
                             binding.recyclerFriend.setAdapter(userAdapter);
                         }
                     });

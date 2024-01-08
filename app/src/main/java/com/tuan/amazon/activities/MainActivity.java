@@ -3,6 +3,7 @@ package com.tuan.amazon.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -15,6 +16,7 @@ import com.tuan.amazon.R;
 import com.tuan.amazon.adapters.MainAdapterViewPager2;
 import com.tuan.amazon.databinding.ActivityMainBinding;
 import com.tuan.amazon.utilities.Constants;
+import com.tuan.amazon.utilities.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
-
+        eventsClick();
     }
 
 
@@ -61,6 +63,24 @@ public class MainActivity extends AppCompatActivity {
         userCurrentID = firebaseUser.getUid();
         listMyFriend = new ArrayList<>();
         getData();
+    }
+
+    private void eventsClick(){
+        binding.btnMessage.setOnClickListener(view -> {
+            gotoChat();
+        });
+    }
+
+    private void gotoChat(){
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        preferenceManager.putBoolean(Constants.KEY_CHECK_CHAT_FROM_PP, false);
+        Intent intent = new Intent(this, ChatActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(Constants.KEY_NAME,"");
+//        bundle.putString(Constants.KEY_USER_IMAGE,"");
+//        bundle.putString(Constants.KEY_USER_ID,"");
+//        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void getData(){

@@ -30,6 +30,8 @@ public class ProfilePersonalFragment extends Fragment {
     private FragmentProfilePersonalBinding binding;
     private FirebaseFirestore firestore;
     private PreferenceManager preferenceManager;
+    private ProfileActivity profileActivity;
+    private String userId;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,14 +47,15 @@ public class ProfilePersonalFragment extends Fragment {
         return binding.getRoot();
     }
 
+
     private void init(){
         firestore = FirebaseFirestore.getInstance();
         preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
     }
 
     private void getInitView(){
-        ProfileActivity profileActivity = (ProfileActivity) getActivity();
-        String userId = profileActivity.getId();
+         profileActivity = (ProfileActivity) getActivity();
+         userId = profileActivity.getId();
         if(userCurrentID.equals(userId)){
             binding.tvCountFriend2.setText(listMyFriend.size() + " bạn bè");
             binding.tvName.setText(profileActivity.getName());
@@ -174,9 +177,21 @@ public class ProfilePersonalFragment extends Fragment {
         binding.imageProfile.setImageBitmap(bitmap);
     }
 
+    private void gotoChat(){
+        preferenceManager.putBoolean(Constants.KEY_CHECK_CHAT_FROM_PP, true);
+        profileActivity = (ProfileActivity) getActivity();
+        Intent intent = new Intent(getActivity().getApplicationContext(), ChatActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_NAME, profileActivity.getName());
+        bundle.putString(Constants.KEY_USER_IMAGE, profileActivity.getImage());
+        bundle.putString(Constants.KEY_USER_ID, profileActivity.getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     private void eventsClick() {
         binding.btnChat.setOnClickListener(view -> {
-            startActivity(new Intent(getActivity().getApplicationContext(), ChatActivity.class));
+            gotoChat();
         });
         binding.layoutNoiSong.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.noiSongHienTaiFragment);
