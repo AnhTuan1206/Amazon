@@ -62,6 +62,8 @@
                android:layout_height="wrap_content"/>
 
            <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recyclerConservation"
+               app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                android:layout_marginTop="@dimen/_10sdp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"/>

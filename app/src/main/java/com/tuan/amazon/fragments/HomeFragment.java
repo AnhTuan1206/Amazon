@@ -25,8 +25,7 @@ import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.databinding.FragmentHomeBinding;
 
 import com.tuan.amazon.utilities.Constants;
-
-
+import com.tuan.amazon.utilities.PreferenceManager;
 
 
 public class HomeFragment extends Fragment {
@@ -35,6 +34,7 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore firestore;
     private String image;
     private String name;
+    private PreferenceManager preferenceManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment {
 
     private void init(){
         firestore = FirebaseFirestore.getInstance();
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
     }
 
     private void loadImageProfile(){
@@ -63,6 +64,8 @@ public class HomeFragment extends Fragment {
                     if(task.isSuccessful()){
                         name = (String) task.getResult().get(Constants.KEY_NAME);
                         image = (String) task.getResult().get(Constants.KEY_USER_IMAGE);
+                        preferenceManager.putString(Constants.KEY_USER_IMAGE, image);
+                        preferenceManager.putString(Constants.KEY_NAME, name);
                         byte[] bytes = Base64.decode(image, Base64.DEFAULT);
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                         binding.imageProfile.setImageBitmap(bitmap);

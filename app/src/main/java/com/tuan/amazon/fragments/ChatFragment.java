@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -37,10 +38,12 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private FirebaseFirestore firestore;
     private static String userId;
-    private static String image;
-    private static String name;
+    private static String image ;
+    private static String name ;
+    private PreferenceManager preferenceManager;
     private ChatAdapter adapter;
     private List<ChatMessage> list;
+    private String conversationId = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,17 +63,61 @@ public class ChatFragment extends Fragment {
 
     private void init(){
         firestore = FirebaseFirestore.getInstance();
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
         list = new ArrayList<>();
         adapter = new ChatAdapter(list, getBitmapFromEncode(image), userCurrentID);
         binding.recyclerChat.setAdapter(adapter);
+        if(conversationId == null){
+            setConversationId();
+        }
     }
 
-    private Bitmap getBitmapFromEncode(String img){
-        if(img != null){
-            byte[] bytes = Base64.decode(img, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+    private void initView(){
+        PreferenceManager preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        if(preferenceManager.getBoolean(Constants.KEY_CHECK_CHAT_FROM_PP)){
+            Intent intent = getActivity().getIntent();
+            Bundle bundle = intent.getExtras();
+            assert bundle != null;
+            name = bundle.getString(Constants.KEY_NAME, "");
+            image = bundle.getString(Constants.KEY_USER_IMAGE, "");
+            userId = bundle.getString(Constants.KEY_USER_ID,"");
+            preferenceManager.putBoolean(Constants.KEY_CHECK_CHAT_FROM_PP, false);
+        }else {
+            name = getArguments().getString(Constants.KEY_NAME);
+            image = getArguments().getString(Constants.KEY_USER_IMAGE);
+            userId = getArguments().getString(Constants.KEY_USER_ID);
         }
-        return null;
+        binding.tvName.setText(name);
+        binding.img.setImageBitmap(setImage(image));
+    }
+
+    private void eventsClick(){
+        binding.btnSend.setOnClickListener(view -> {
+            sentChatMessage();
+        });
+    }
+
+
+    private void sentChatMessage(){
+        Map<String, Object> map = new HashMap<>();
+        map.put(Constants.KEY_SENDER_ID, userCurrentID);
+        map.put(Constants.KEY_RECEIVER_ID, userId);
+        map.put(Constants.KEY_CHAT_MESSAGE, binding.etChatMessage.getText().toString());
+        map.put(Constants.KEY_TIME_SEND, new Date());
+        firestore.collection(Constants.KEY_CHAT_MESSAGE).add(map);
+
+        HashMap<String,Object> conversation = new HashMap<>();
+        conversation.put(Constants.KEY_SENDER_ID, userCurrentID);
+        conversation.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
+        conversation.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_USER_IMAGE));
+        conversation.put(Constants.KEY_RECEIVER_NAME, name);
+        conversation.put(Constants.KEY_RECEIVER_IMAGE, image);
+        conversation.put(Constants.KEY_RECEIVER_ID, userId);
+        conversation.put(Constants.KEY_LAST_MESSAGE, binding.etChatMessage.getText().toString());
+        conversation.put(Constants.KEY_TIME_SEND, new Date());
+        addConversation(conversation);
+
+        binding.etChatMessage.setText(null);
     }
 
     private void listenChatMessage(){
@@ -93,15 +140,14 @@ public class ChatFragment extends Fragment {
             for (DocumentChange documentChange : value.getDocumentChanges()){
                 if(documentChange.getType() == DocumentChange.Type.ADDED){
                     ChatMessage chatMessage = new ChatMessage();
-                    chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
-                    chatMessage.message = documentChange.getDocument().getString(Constants.KEY_CHAT_MESSAGE);
-                    chatMessage.receiverID = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
-                    chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIME_SEND);
-                    chatMessage.dateTime = getReadableDataTime(documentChange.getDocument().getDate(Constants.KEY_TIME_SEND));
+                    chatMessage.setSenderId(documentChange.getDocument().getString(Constants.KEY_SENDER_ID));
+                    chatMessage.setMessage(documentChange.getDocument().getString(Constants.KEY_CHAT_MESSAGE));
+                    chatMessage.setReceiverID( documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID));
+                    chatMessage.setDateObject(documentChange.getDocument().getDate(Constants.KEY_TIME_SEND));
+                    chatMessage.setDateTime(getReadableDataTime(documentChange.getDocument().getDate(Constants.KEY_TIME_SEND)));
                     list.add(chatMessage);
-                    Log.d("com.tuan.amazon.test", String.valueOf(list.size()));
                 }
-                list.sort((obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
+                list.sort((obj1, obj2) -> obj1.getDateObject().compareTo(obj2.getDateObject()));
                 if(count == 0){
                     adapter.notifyDataSetChanged();
                 }else {
@@ -112,48 +158,33 @@ public class ChatFragment extends Fragment {
         }
     };
 
+    private String setConversationId(){
+        if(userCurrentID.compareTo(userId) > 0){
+            return conversationId = userCurrentID + userId;
+        }else return conversationId = userId + userCurrentID;
+    }
+
+
+    private void addConversation(HashMap<String,Object> conversation){
+        firestore.collection(Constants.KEY_CONVERSATION)
+                .document(conversationId)
+                .set(conversation);
+    }
+
     private String getReadableDataTime(Date date){
         return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
     }
-
-    private void initView(){
-        PreferenceManager preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
-        if(preferenceManager.getBoolean(Constants.KEY_CHECK_CHAT_FROM_PP)){
-            Intent intent = getActivity().getIntent();
-            Bundle bundle = intent.getExtras();
-            assert bundle != null;
-            name = bundle.getString(Constants.KEY_NAME, "");
-            image = bundle.getString(Constants.KEY_USER_IMAGE, "");
-            userId = bundle.getString(Constants.KEY_USER_ID,"");
-            preferenceManager.putBoolean(Constants.KEY_CHECK_CHAT_FROM_PP, false);
-        }else {
-            name = getArguments().getString(Constants.KEY_NAME);
-            image = getArguments().getString(Constants.KEY_USER_IMAGE);
-            userId = getArguments().getString(Constants.KEY_USER_ID);
-        }
-        binding.tvName.setText(name);
-        binding.img.setImageBitmap(setImage(image));
-    }
-
-
 
     private Bitmap setImage(String image){
         byte[] bytes = Base64.decode(image, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
-    private void eventsClick(){
-        binding.btnSend.setOnClickListener(view -> {
-            sentChatMessage();
-        });
-    }
-    private void sentChatMessage(){
-        Map<String, Object> map = new HashMap<>();
-        map.put(Constants.KEY_SENDER_ID, userCurrentID);
-        map.put(Constants.KEY_RECEIVER_ID, userId);
-        map.put(Constants.KEY_CHAT_MESSAGE, binding.etChatMessage.getText().toString());
-        map.put(Constants.KEY_TIME_SEND, new Date());
-        firestore.collection(Constants.KEY_CHAT_MESSAGE).add(map);
-        binding.etChatMessage.setText(null);
+    private Bitmap getBitmapFromEncode(String img){
+        if(img != null){
+            byte[] bytes = Base64.decode(img, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+        }
+        return null;
     }
 }

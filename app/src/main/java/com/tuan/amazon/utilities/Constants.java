@@ -20,7 +20,6 @@ public class Constants {
     public static final String KEY_CONG_KHAI_NOI_O = "congKhaiNoiO";
     public static final String KEY_CONG_KHAI_HOME_TOWN = "congKhaiHomeTown";
     public static final String KEY_CONG_KHAI_NOI_LAM_VIEC = "congKhaiNoiLamViec";
-    public static final String KEY_CONG_KHAI_MOI_QUAN_HE = "congKhaiMOIQH";
     public static final String KEY_USER_PROFILE = "userProfile";
     public static final String KEY_CDCK_CONG_KHAI = " Công khai ";
     public static final String KEY_CDCK_BAN_BE = " Bạn bè ";
@@ -31,5 +30,13 @@ public class Constants {
     public static final String KEY_SENDER_ID = "senderId";
     public static final String KEY_RECEIVER_ID = "receiverId";
     public static final String KEY_TIME_SEND = "timeSend";
-    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_CONVERSATION = "conversation";
+    public static final String KEY_LAST_MESSAGE = "lastMessage";
+    public static final String KEY_SENDER_NAME = "senderName";
+    public static final String KEY_SENDER_IMAGE = "senderImage";
+    public static final String KEY_RECEIVER_NAME = "receiverName";
+    public static final String KEY_RECEIVER_IMAGE = "receiverImage";
+    public static final String KEY_CONVERSATION_ID = "conversationId";
+    public static final String KEY_CONVERSATION_IMAGE = "conversationImage";
+    public static final String KEY_CONVERSATION_NAME = "conservationName";
 }
