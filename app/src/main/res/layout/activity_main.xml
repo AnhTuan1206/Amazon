@@ -23,7 +23,7 @@
             android:textSize="@dimen/_25sdp"
             android:textStyle="bold" />
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnAddMain"
+            android:id="@+id/btnBaiViet"
             android:layout_marginStart="@dimen/_110sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:background="@drawable/ic_add"

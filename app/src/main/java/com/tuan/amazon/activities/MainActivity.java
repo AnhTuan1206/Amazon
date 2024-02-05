@@ -69,17 +69,16 @@ public class MainActivity extends AppCompatActivity {
         binding.btnMessage.setOnClickListener(view -> {
             gotoChat();
         });
+
+        binding.btnBaiViet.setOnClickListener(view -> {
+            startActivity(new Intent(this, BaiVietActivity.class));
+        });
     }
 
     private void gotoChat(){
         PreferenceManager preferenceManager = new PreferenceManager(this);
         preferenceManager.putBoolean(Constants.KEY_CHECK_CHAT_FROM_PP, false);
         Intent intent = new Intent(this, ChatActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Constants.KEY_NAME,"");
-//        bundle.putString(Constants.KEY_USER_IMAGE,"");
-//        bundle.putString(Constants.KEY_USER_ID,"");
-//        intent.putExtras(bundle);
         startActivity(intent);
     }
 

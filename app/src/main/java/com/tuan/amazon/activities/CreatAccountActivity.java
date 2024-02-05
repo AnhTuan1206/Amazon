@@ -23,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.tuan.amazon.R;
 import com.tuan.amazon.databinding.ActivityCreatAccountBinding;
 import com.tuan.amazon.utilities.Constants;
 

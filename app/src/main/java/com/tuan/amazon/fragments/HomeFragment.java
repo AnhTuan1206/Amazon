@@ -84,7 +84,6 @@ public class HomeFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.KEY_USER_ID, userCurrentID);
         bundle.putString(Constants.KEY_NAME, name);
-//        intent.putExtra(Constants.KEY_CURRENT_USER_ID, userCurrentID);
         bundle.putString(Constants.KEY_USER_IMAGE, image);
         intent.putExtra(Constants.KEY_USER_PROFILE, bundle);
         startActivity(intent);

@@ -36,7 +36,12 @@ public class Constants {
     public static final String KEY_SENDER_IMAGE = "senderImage";
     public static final String KEY_RECEIVER_NAME = "receiverName";
     public static final String KEY_RECEIVER_IMAGE = "receiverImage";
-    public static final String KEY_CONVERSATION_ID = "conversationId";
-    public static final String KEY_CONVERSATION_IMAGE = "conversationImage";
-    public static final String KEY_CONVERSATION_NAME = "conservationName";
+//    public static final String KEY_CONVERSATION_ID = "conversationId";
+//    public static final String KEY_CONVERSATION_IMAGE = "conversationImage";
+//    public static final String KEY_CONVERSATION_NAME = "conservationName";
+    public static final String KEY_POSTS = "posts";
+    public static final String KEY_CREATOR_ID = "creatorId";
+    public static final String KEY_CAPTION = "caption";
+    public static final String KEY_TIME_CREATE_POST = "timeCreatePost";
+    public static final String KEY_IMAGE_POST = "imagePost";
 }

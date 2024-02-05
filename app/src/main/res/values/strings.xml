@@ -48,5 +48,11 @@
     <string name="th_m_b_n_b">Thêm bạn bè</string>
     <string name="t_m_ki_m">Tìm kiếm</string>
     <string name="o_n_chat">Đoạn chat</string>
+    <string name="nh_video">Ảnh/video</string>
+    <string name="g_n_th_ng_i_kh_c">Gắn thẻ người khác</string>
+    <string name="ng">Đăng</string>
+    <string name="c_m_x_c_ho_t_ng">Cảm xúc/hoạt động</string>
+    <string name="th_ch">Thích</string>
+    <string name="b_nh_lu_n">bình luận</string>
 
 </resources>

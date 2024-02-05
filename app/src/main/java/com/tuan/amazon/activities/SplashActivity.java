@@ -10,6 +10,8 @@ import android.view.View;
 import com.tuan.amazon.R;
 import com.tuan.amazon.databinding.ActivitySplashBinding;
 
+import java.io.InputStream;
+
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
