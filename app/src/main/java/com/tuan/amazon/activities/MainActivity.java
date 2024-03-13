@@ -40,8 +40,13 @@ public class MainActivity extends AppCompatActivity {
         eventsClick();
     }
 
-
     private void init(){
+        firestore = FirebaseFirestore.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        userCurrentID = firebaseUser.getUid();
+        listMyFriend = new ArrayList<>();
+        getData();
         mainAdapterViewPager2 = new MainAdapterViewPager2(this);
         binding.viewPager2.setAdapter(mainAdapterViewPager2);
         new TabLayoutMediator(binding.tabLayout, binding.viewPager2, (tab, position) -> {
@@ -57,12 +62,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attach();
 
-        firestore = FirebaseFirestore.getInstance();
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        userCurrentID = firebaseUser.getUid();
-        listMyFriend = new ArrayList<>();
-        getData();
     }
 
     private void eventsClick(){
@@ -91,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                      if(task.isSuccessful()){
                          for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                              listMyFriend.add(queryDocumentSnapshot.getString(Constants.KEY_ID));
+
                          }
                      }
                  });

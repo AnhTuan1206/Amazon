@@ -92,9 +92,13 @@ public class BaiVietFragment extends Fragment implements TextWatcher {
     private void dangBai(){
         Map<String,Object> map = new HashMap<>();
         map.put(Constants.KEY_CREATOR_ID, userCurrentID);
+        map.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
+        map.put(Constants.KEY_USER_IMAGE,preferenceManager.getString(Constants.KEY_USER_IMAGE));
         map.put(Constants.KEY_CAPTION, binding.etBaiViet.getText().toString());
+        map.put(Constants.KEY_COUNT_LIKE,0);
+        map.put(Constants.KEY_COUNT_COMMENT, 0);
         if(binding.imgBaiViet.getDrawable() == null){
-            map.put(Constants.KEY_IMAGE_POST, null);
+            map.put(Constants.KEY_IMAGE_POST, "null");
         }else {
             map.put(Constants.KEY_IMAGE_POST,endcodedImage);
         }

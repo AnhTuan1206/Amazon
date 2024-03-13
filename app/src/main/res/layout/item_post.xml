@@ -53,7 +53,6 @@
         <TextView
             android:id="@+id/tvNumberCountLike"
             android:layout_marginLeft="@dimen/_3sdp"
-            android:text="20"
             android:paddingTop="@dimen/_3sdp"
             android:paddingBottom="@dimen/_3sdp"
             android:textSize="@dimen/_13ssp"
@@ -90,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgLike"
                 android:background="@drawable/ic_like_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

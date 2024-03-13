@@ -44,4 +44,9 @@ public class Constants {
     public static final String KEY_CAPTION = "caption";
     public static final String KEY_TIME_CREATE_POST = "timeCreatePost";
     public static final String KEY_IMAGE_POST = "imagePost";
+    public static final String KEY_COUNT_LIKE = "countLike";
+    public static final String KEY_COUNT_COMMENT = "countComment";
+    public static final String KEY_LIST_USER_LIKE_POST = "listUserLikePost";
+    public static final String KEY_ID_POST = "idPost";
+    public static final String KEY_COMMENT = "comment";
 }
