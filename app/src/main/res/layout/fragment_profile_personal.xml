@@ -142,11 +142,51 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
-                    android:text="@string/chi_ti_t"
+                    android:text="@string/gi_i_thi_u"
                     android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
 
                 <LinearLayout
+                    android:id="@+id/layoutGioiTinh"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/ic_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tvGioiTinh"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_11sdp"
+                        android:text="@string/gi_i_t_nh"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutYearOfBirth"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:background="@drawable/ic_yearofbirth"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tvYearOfBirth"
+                        android:textSize="@dimen/_13ssp"
+                        android:text="@string/n_m_sinh"
+                        android:layout_marginStart="@dimen/_11sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:id="@+id/layoutNoiSong"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,28 +254,7 @@
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layoutMoiQuanHe"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:background="@drawable/ic_relationship" />
-
-                    <TextView
-                        android:id="@+id/tvMoiQuanHe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_11sdp"
-                        android:text="@string/t_nh_tr_ng_m_i_quan_h"
-                        android:textSize="@dimen/_13ssp" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layoutThongTingioithieu"
@@ -260,13 +279,6 @@
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnChiTietCongKhai"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:background="@drawable/background_icon_xanh_nhat"
-                    android:text="Chỉnh sửa chi tiết công khai" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutFriend"

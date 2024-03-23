@@ -3,7 +3,8 @@ package com.tuan.amazon.models;
 import java.util.Date;
 
 public class Comment {
-    private String name, imgAvatar, comment, dateTime, idUser, id;
+    private String name, imgAvatar, comment, dateTime, idUser, id, idPost;
+    private Date dateObject;
 
     public String getId() {
         return id;
@@ -21,7 +22,6 @@ public class Comment {
         this.idUser = idUser;
     }
 
-    private Date dateObject;
 
     public String getName() {
         return name;
@@ -63,16 +63,25 @@ public class Comment {
         this.dateObject = dateObject;
     }
 
-    public Comment(String name, String imgAvatar, String comment, String dateTime, String idUser, String img, String id, Date dateObject) {
+    public Comment(String name, String imgAvatar, String comment, String dateTime, String idUser, String img, String id, String idPost, Date dateObject) {
         this.name = name;
         this.imgAvatar = imgAvatar;
         this.comment = comment;
         this.dateTime = dateTime;
         this.idUser = idUser;
         this.id = id;
+        this.idPost = idPost;
         this.dateObject = dateObject;
     }
 
     public Comment() {
+    }
+
+    public String getIdPost() {
+        return idPost;
+    }
+
+    public void setIdPost(String idPost) {
+        this.idPost = idPost;
     }
 }

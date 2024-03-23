@@ -44,6 +44,11 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.danhSachBanBeDeChat = danhSachBanBeDeChat;
     }
 
+    public void setFilteredList(List<User> filteredList){
+        this.list = filteredList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,12 +35,47 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
         setContentView(binding.getRoot());
         init();
         initView();
+        event();
     }
 
     private void initView(){
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle(userCurrentName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void event(){
+        searchFriend();
+    }
+
+    private void searchFriend(){
+        binding.searchView.clearFocus();
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
+            }
+        });
+    }
+
+    private void filterList(String txt){
+        List<User> filterList = new ArrayList<>();
+        for (User user : list){
+            if(user.getName().toLowerCase().contains(txt.toLowerCase())){
+                filterList.add(user);
+            }
+        }
+        if(filterList.isEmpty()){
+            Toast.makeText(this,"Không tìm thấy tên bạn bè tương ứng", Toast.LENGTH_LONG).show();
+        }else {
+            userAdapter.setFilteredList(filterList);
+        }
     }
 
     @Override

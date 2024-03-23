@@ -9,10 +9,10 @@ import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +21,21 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tuan.amazon.R;
-import com.tuan.amazon.databinding.FragmentWorkPlaceBinding;
+import com.tuan.amazon.databinding.FragmentGioiTinhBinding;
 import com.tuan.amazon.utilities.Constants;
-import com.tuan.amazon.utilities.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class WorkPlaceFragment extends Fragment implements TextWatcher {
+public class GioiTinhFragment extends Fragment implements TextWatcher {
 
-    private FragmentWorkPlaceBinding binding;
+    private FragmentGioiTinhBinding binding;
     private FirebaseFirestore firestore;
-    private PreferenceManager preferenceManager;
+    private  String gioiTinh ;
+    public GioiTinhFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,22 +46,24 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentWorkPlaceBinding.inflate(inflater, null, false);
+        binding = FragmentGioiTinhBinding.inflate(inflater, null, false);
         initView();
-        eventsClick();
+        eventClick();
         return binding.getRoot();
     }
 
     private void init(){
+        gioiTinh = getArguments().getString(Constants.KEY_GIOI_TINH);
         firestore = FirebaseFirestore.getInstance();
-        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
     }
 
     private void initView(){
-        binding.etThemNoiLamViec.setText(getArguments().getString(Constants.KEY_NOI_LAM_VIEC));
-        binding.btnCheDoCongKhai.setText(getArguments().getString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC));
-
-        switch (Constants.KEY_CONG_KHAI_NOI_LAM_VIEC){
+        Log.d("com.tuan.amazon.test", getArguments().getString(Constants.KEY_CONG_KHAI_GIOI_TINH));
+        if(gioiTinh.equals("Nam")){
+            binding.rbNam.setChecked(true);
+        }else binding.rbNu.setChecked(true);
+        binding.btnCheDoCongKhai.setText(getArguments().getString(Constants.KEY_CONG_KHAI_GIOI_TINH));
+        switch (getArguments().getString(Constants.KEY_CONG_KHAI_GIOI_TINH)){
             case Constants.KEY_CDCK_BAN_BE:
                 binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex, 0, R.drawable.ic_down, 0);
                 break;
@@ -67,33 +71,71 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
                 binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_only_me,0,R.drawable.ic_down,0);
                 break;
         }
-
-        binding.etThemNoiLamViec.addTextChangedListener(this);
         binding.btnCheDoCongKhai.addTextChangedListener(this);
+        radioButtonCheckChanged();
     }
 
-    private void eventsClick(){
-        binding.btnBack.setOnClickListener(v ->{
-            Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
+    private void radioButtonCheckChanged(){
+        binding.rbNam.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b){
+                switch (gioiTinh){
+                    case "Nam":
+                        binding.btnSave.setTextColor(Color.GRAY);
+                        Resources res = getResources();
+                        Drawable drawable = ResourcesCompat.getDrawable(res, R.drawable.background_btn_whiter, null);
+                        binding.btnSave.setBackground(drawable);
+                        binding.btnSave.setEnabled(false);
+                        break;
+                    case "Nữ":
+                        setEnableBtnSave();
+                        break;
+                }
+            }else {
+                switch (gioiTinh){
+                    case "Nữ":
+                        binding.btnSave.setTextColor(Color.GRAY);
+                        Resources res = getResources();
+                        Drawable drawable = ResourcesCompat.getDrawable(res, R.drawable.background_btn_whiter, null);
+                        binding.btnSave.setBackground(drawable);
+                        binding.btnSave.setEnabled(false);
+                        break;
+                    case "Nam":
+                        setEnableBtnSave();
+                        break;
+                }
+            }
         });
 
-        binding.btnSave.setOnClickListener(v ->{
+    }
+
+    private void setEnableBtnSave(){
+        binding.btnSave.setTextColor(Color.WHITE);
+        binding.btnSave.setBackgroundColor(Color.BLUE);
+        binding.btnSave.setEnabled(true);
+    }
+
+    private void eventClick(){
+        binding.btnSave.setOnClickListener(view -> {
+            String gioiTinh;
+            if(binding.rbNam.isChecked()){
+                gioiTinh = "Nam";
+            }else gioiTinh = "Nữ";
             Map<String, Object> map = new HashMap<>();
-            map.put(Constants.KEY_NOI_LAM_VIEC, binding.etThemNoiLamViec.getText().toString());
-            map.put(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC, binding.btnCheDoCongKhai.getText().toString());
+            map.put(Constants.KEY_GIOI_TINH, gioiTinh);
+            map.put(Constants.KEY_CONG_KHAI_GIOI_TINH, binding.btnCheDoCongKhai.getText().toString());
             firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
                     .document(userCurrentID)
-                    .collection(Constants.KEY_NOI_LAM_VIEC)
+                    .collection(Constants.KEY_GIOI_TINH)
                     .document(userCurrentID)
                     .set(map)
                     .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getContext(), "Thêm thông tin nơi làm việc thành công", Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()){
+                            Toast.makeText(getContext(), "Thêm thông tin giới tính thành công", Toast.LENGTH_SHORT).show();
                         }
                     });
         });
 
-        binding.btnCheDoCongKhai.setOnClickListener(v ->{
+        binding.btnCheDoCongKhai.setOnClickListener(view -> {
             dieuChinhCongKhai();
         });
     }
@@ -122,9 +164,6 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
         });
     }
 
-
-
-
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -137,17 +176,15 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if(!binding.etThemNoiLamViec.getText().toString().equals(getArguments().getString(Constants.KEY_NOI_LAM_VIEC))
-        || !binding.btnCheDoCongKhai.getText().toString().equals(getArguments().getString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC))){
-            binding.btnSave.setTextColor(Color.WHITE);
-            binding.btnSave.setBackgroundColor(Color.BLUE);
-            binding.btnSave.setEnabled(true);
-        } else {
-            binding.btnSave.setTextColor(Color.GRAY);
-            Resources res = getResources();
-            Drawable drawable = ResourcesCompat.getDrawable(res, R.drawable.background_btn_whiter, null);
-            binding.btnSave.setBackground(drawable);
-            binding.btnSave.setEnabled(false);
+            if(!binding.btnCheDoCongKhai.getText().toString().equals(getArguments().getString(Constants.KEY_CONG_KHAI_GIOI_TINH))){
+                setEnableBtnSave();
+            }else {
+                binding.btnSave.setTextColor(Color.GRAY);
+                Resources res = getResources();
+                Drawable drawable = ResourcesCompat.getDrawable(res, R.drawable.background_btn_whiter, null);
+                binding.btnSave.setBackground(drawable);
+                binding.btnSave.setEnabled(false);
+            }
         }
-    }
+
 }

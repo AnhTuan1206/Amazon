@@ -25,6 +25,12 @@
         <action
             android:id="@+id/action_profilePersonalFragment_to_friendFragment"
             app:destination="@id/friendFragment" />
+        <action
+            android:id="@+id/action_profilePersonalFragment_to_gioiTinhFragment"
+            app:destination="@id/gioiTinhFragment" />
+        <action
+            android:id="@+id/action_profilePersonalFragment_to_birthTimeFragment"
+            app:destination="@id/birthTimeFragment" />
     </fragment>
     <fragment
         android:id="@+id/noiSongHienTaiFragment"
@@ -63,4 +69,14 @@
         android:name="com.tuan.amazon.fragments.GoiYKetBanFragment"
         android:label="fragment_friend"
         tools:layout="@layout/fragment_goi_y_ket_ban" />
+    <fragment
+        android:id="@+id/gioiTinhFragment"
+        android:name="com.tuan.amazon.fragments.GioiTinhFragment"
+        android:label="fragment_gioi_tinh"
+        tools:layout="@layout/fragment_gioi_tinh" />
+    <fragment
+        android:id="@+id/birthTimeFragment"
+        android:name="com.tuan.amazon.fragments.BirthTimeFragment"
+        android:label="fragment_birth_time"
+        tools:layout="@layout/fragment_birth_time" />
 </navigation>

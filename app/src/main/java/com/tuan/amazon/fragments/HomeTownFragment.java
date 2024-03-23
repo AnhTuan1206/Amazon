@@ -56,12 +56,12 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
     }
 
     private void initView(){
-        binding.etQueQUan.setText(preferenceManager.getString(Constants.KEY_HOME_TOWN));
-        binding.btnCheDoCongKhai.setText(preferenceManager.getString(Constants.KEY_CONG_KHAI_HOME_TOWN));
+        binding.etQueQUan.setText(getArguments().getString(Constants.KEY_HOME_TOWN));
+        binding.btnCheDoCongKhai.setText(getArguments().getString(Constants.KEY_CONG_KHAI_HOME_TOWN));
 
-        switch (preferenceManager.getString(Constants.KEY_CONG_KHAI_HOME_TOWN)){
+        switch (getArguments().getString(Constants.KEY_CONG_KHAI_HOME_TOWN)){
             case Constants.KEY_CDCK_BAN_BE:
-                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_relationship, 0, R.drawable.ic_down, 0);
+                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex, 0, R.drawable.ic_down, 0);
                 break;
             case Constants.KEY_CDCK_MINH_TOI:
                 binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_only_me,0,R.drawable.ic_down,0);
@@ -91,7 +91,6 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
                             Toast.makeText(getContext(), "Thêm thông tin quê quán thành công", Toast.LENGTH_SHORT).show();
                         }
                     });
-
         });
 
         binding.btnCheDoCongKhai.setOnClickListener(v ->{
@@ -119,7 +118,7 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
         view.findViewById(R.id.layoutFriend1).setOnClickListener(v ->{
             bottomSheetDialog.dismiss();
             binding.btnCheDoCongKhai.setText(Constants.KEY_CDCK_BAN_BE);
-            binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_relationship, 0, R.drawable.ic_down, 0);
+            binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex, 0, R.drawable.ic_down, 0);
         });
     }
 
@@ -136,12 +135,12 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if(!binding.etQueQUan.getText().toString().equals(preferenceManager.getString(Constants.KEY_HOME_TOWN))
-        || !binding.btnCheDoCongKhai.getText().equals(preferenceManager.getString(Constants.KEY_CONG_KHAI_HOME_TOWN))){
+        if(!binding.etQueQUan.getText().toString().equals(getArguments().getString(Constants.KEY_HOME_TOWN))
+        || !binding.btnCheDoCongKhai.getText().equals(getArguments().getString(Constants.KEY_CONG_KHAI_HOME_TOWN))){
             binding.btnSave.setTextColor(Color.WHITE);
             binding.btnSave.setBackgroundColor(Color.BLUE);
             binding.btnSave.setEnabled(true);
-        } else if(binding.etQueQUan.getText().toString().trim().isEmpty()){
+        } else {
             binding.btnSave.setTextColor(Color.GRAY);
             Resources res = getResources();
             Drawable drawable = ResourcesCompat.getDrawable(res, R.drawable.background_btn_whiter, null);

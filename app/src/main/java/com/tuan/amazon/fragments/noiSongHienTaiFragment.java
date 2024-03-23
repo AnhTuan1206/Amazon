@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,7 +32,6 @@ import java.util.Map;
 public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
     private FragmentNoiSongHienTaiBinding binding;
     private FirebaseFirestore firestore;
-    private PreferenceManager preferenceManager;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,30 +49,28 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
 
     private void init(){
         firestore = FirebaseFirestore.getInstance();
-        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
     }
 
     private void initView(){
-        binding.etThemNoiSong.setText(preferenceManager.getString(Constants.KEY_NOI_O));
-        binding.btnCheDoCongKhai.setText(preferenceManager.getString(Constants.KEY_CONG_KHAI_NOI_O));
-        switch (preferenceManager.getString(Constants.KEY_CONG_KHAI_NOI_O)){
+        binding.etThemNoiSong.setText(getArguments().getString(Constants.KEY_NOI_O));
+        binding.btnCheDoCongKhai.setText( getArguments().getString(Constants.KEY_CONG_KHAI_NOI_O));
+        switch (getArguments().getString(Constants.KEY_CONG_KHAI_NOI_O)){
             case Constants.KEY_CDCK_BAN_BE:
-                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_relationship, 0, R.drawable.ic_down, 0);
+                binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex, 0, R.drawable.ic_down, 0);
                 break;
             case Constants.KEY_CDCK_MINH_TOI:
                 binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_only_me,0,R.drawable.ic_down,0);
                 break;
         }
-        Log.d("com.tuan.amazon.test", preferenceManager.getString(Constants.KEY_CONG_KHAI_NOI_O).toString());
         binding.etThemNoiSong.addTextChangedListener(this);
         binding.btnCheDoCongKhai.addTextChangedListener(this);
     }
 
     private void eventsClick(){
         binding.btnSave.setOnClickListener(v -> {
-                Map map = new HashMap();
-                map.put(Constants.KEY_NOI_O, binding.etThemNoiSong.getText().toString());
-                map.put(Constants.KEY_CONG_KHAI_NOI_O, binding.btnCheDoCongKhai.getText().toString());
+            Map<String, Object> map = new HashMap<>();
+            map.put(Constants.KEY_NOI_O, binding.etThemNoiSong.getText().toString());
+            map.put(Constants.KEY_CONG_KHAI_NOI_O, binding.btnCheDoCongKhai.getText().toString());
                 firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
                         .document(userCurrentID)
                         .collection(Constants.KEY_NOI_O)
@@ -115,7 +111,7 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
         view.findViewById(R.id.layoutFriend1).setOnClickListener(v ->{
             bottomSheetDialog.dismiss();
             binding.btnCheDoCongKhai.setText(Constants.KEY_CDCK_BAN_BE);
-            binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_relationship, 0, R.drawable.ic_down, 0);
+            binding.btnCheDoCongKhai.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sex, 0, R.drawable.ic_down, 0);
         });
     }
 
@@ -132,8 +128,8 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if(!binding.etThemNoiSong.getText().toString().equals(preferenceManager.getString(Constants.KEY_NOI_O))
-         || !binding.btnCheDoCongKhai.getText().toString().equals(preferenceManager.getString(Constants.KEY_CONG_KHAI_NOI_O))){
+        if(!binding.etThemNoiSong.getText().toString().equals(getArguments().getString(Constants.KEY_NOI_O))
+         || !binding.btnCheDoCongKhai.getText().toString().equals(getArguments().getString(Constants.KEY_CONG_KHAI_NOI_O))){
             binding.btnSave.setTextColor(Color.WHITE);
             binding.btnSave.setBackgroundColor(Color.BLUE);
             binding.btnSave.setEnabled(true);
@@ -145,4 +141,6 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
             binding.btnSave.setEnabled(false);
         }
     }
+
+
 }

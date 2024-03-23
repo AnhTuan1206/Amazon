@@ -32,7 +32,7 @@
     <string name="ch_nh_s_a_trang_c_nh_n">Chỉnh sửa trang cá nhân</string>
     <string name="th_m_v_o_tin">+ Thêm vào tin</string>
     <string name="qu_qu_n">Quê quán</string>
-    <string name="xem_th_ng_tin_gi_i_thi_u">Xem thông tin giới thiệu</string>
+    <string name="xem_th_ng_tin_gi_i_thi_u">Xem thêm thông tin giới thiệu</string>
     <string name="t_nh_tr_ng_m_i_quan_h">Tình trạng mối quan hệ</string>
     <string name="n_i_l_m_vi_c">Nơi làm việc</string>
     <string name="t_nh_th_nh_ph_hi_n_t_i">Tỉnh/Thành phố hiện tại</string>
@@ -57,5 +57,15 @@
     <string name="h_y_l_ng_i_u_ti_n_b_nh_lu_n">Hãy là người đầu tiên bình luận</string>
     <string name="vi_t_b_nh_lu_n">Viết bình luận</string>
     <string name="ch_a_c_b_nh_lu_n_n_o">Chưa có bình luận nào</string>
+    <string name="xo">Xoá</string>
+    <string name="ch_nh_s_a">Chỉnh sửa</string>
+    <string name="l_u">Lưu</string>
+    <string name="hu">Huỷ</string>
+    <string name="ch_nh_s_a_b_nh_lu_n">Chỉnh sửa bình luận</string>
+    <string name="gi_i_thi_u">Giới thiệu</string>
+    <string name="gi_i_t_nh">Giới tính</string>
+    <string name="n_m_sinh">Năm sinh</string>
+    <string name="nam">Nam</string>
+    <string name="n">Nữ</string>
 
 </resources>

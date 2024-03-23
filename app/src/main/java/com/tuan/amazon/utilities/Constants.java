@@ -36,9 +36,6 @@ public class Constants {
     public static final String KEY_SENDER_IMAGE = "senderImage";
     public static final String KEY_RECEIVER_NAME = "receiverName";
     public static final String KEY_RECEIVER_IMAGE = "receiverImage";
-//    public static final String KEY_CONVERSATION_ID = "conversationId";
-//    public static final String KEY_CONVERSATION_IMAGE = "conversationImage";
-//    public static final String KEY_CONVERSATION_NAME = "conservationName";
     public static final String KEY_POSTS = "posts";
     public static final String KEY_CREATOR_ID = "creatorId";
     public static final String KEY_CAPTION = "caption";
@@ -49,4 +46,8 @@ public class Constants {
     public static final String KEY_LIST_USER_LIKE_POST = "listUserLikePost";
     public static final String KEY_ID_POST = "idPost";
     public static final String KEY_COMMENT = "comment";
+    public static final String KEY_GIOI_TINH = "gioiTinh";
+    public static final String KEY_CONG_KHAI_GIOI_TINH = "congKhaiGioiTinh";
+    public static final String KEY_NAM_SINH = "namSinh";
+    public static final String KEY_CONG_KHAI_NAM_SINH = "congKhaiNamSinh";
 }

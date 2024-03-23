@@ -32,6 +32,7 @@ public class ProfilePersonalFragment extends Fragment {
     private PreferenceManager preferenceManager;
     private ProfileActivity profileActivity;
     private String userId;
+    private static String congKhaiNoiSong="", ckQueQuan="", ckNLV="", ckGT = "", ckNS = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,7 @@ public class ProfilePersonalFragment extends Fragment {
             binding.layoutNoiSong.setEnabled(false);
             binding.layoutQueQuan.setEnabled(false);
             binding.layoutNoiLamViec.setEnabled(false);
-            binding.layoutMoiQuanHe.setEnabled(false);
+            binding.layoutGioiTinh.setEnabled(false);
             binding.btnChat.setVisibility(View.VISIBLE);
             if(!listMyFriend.contains(userId)){
                 binding.btnaddFriend.setVisibility(View.VISIBLE);
@@ -78,6 +79,8 @@ public class ProfilePersonalFragment extends Fragment {
         getDataProfileNoiSong(userId);
         getDataProfileNoiLamViec(userId);
         getDataProfileQueQuan(userId);
+        getDataGioiTinh(userId);
+        getDataNamSinh(userId);
     }
 
     private void getDataProfileNoiSong(String id){
@@ -89,17 +92,16 @@ public class ProfilePersonalFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult().get(Constants.KEY_NOI_O) != null){
                         if(userCurrentID.equals(id)){
-                            binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().get(Constants.KEY_NOI_O));
-                            preferenceManager.putString(Constants.KEY_NOI_O, task.getResult().get(Constants.KEY_NOI_O).toString());
-                            preferenceManager.putString(Constants.KEY_CONG_KHAI_NOI_O, task.getResult().get(Constants.KEY_CONG_KHAI_NOI_O).toString());
+                            binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().getString(Constants.KEY_NOI_O));
+                            congKhaiNoiSong = task.getResult().getString(Constants.KEY_CONG_KHAI_NOI_O);
                         }else {
-                            switch (task.getResult().get(Constants.KEY_CONG_KHAI_NOI_O).toString()){
+                            switch (task.getResult().getString(Constants.KEY_CONG_KHAI_NOI_O)){
                                 case Constants.KEY_CDCK_CONG_KHAI:
-                                    binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().get(Constants.KEY_NOI_O));
+                                    binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().getString(Constants.KEY_NOI_O));
                                     break;
                                 case Constants.KEY_CDCK_BAN_BE:
                                     if(listMyFriend.contains(id)){
-                                        binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().get(Constants.KEY_NOI_O));
+                                        binding.tvNoiSong.setText("Hiện đang sống tại " + task.getResult().getString(Constants.KEY_NOI_O));
                                         break;
                                       }
 
@@ -120,18 +122,17 @@ public class ProfilePersonalFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()  && task.getResult().get(Constants.KEY_NOI_LAM_VIEC) != null){
                             if(userCurrentID.equals(id)){
-                                binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
-                                preferenceManager.putString(Constants.KEY_NOI_LAM_VIEC, task.getResult().get(Constants.KEY_NOI_LAM_VIEC).toString());
-                                preferenceManager.putString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC, task.getResult().get(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC).toString());
+                                binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().getString(Constants.KEY_NOI_LAM_VIEC));
+                                ckNLV = task.getResult().get(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC).toString();
                             }else
                             {
-                                switch (task.getResult().get(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC).toString()){
+                                switch (task.getResult().getString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC)){
                                     case Constants.KEY_CDCK_CONG_KHAI:
-                                        binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                                        binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().getString(Constants.KEY_NOI_LAM_VIEC));
                                         break;
                                     case Constants.KEY_CDCK_BAN_BE:
                                         if(listMyFriend.contains(id)){
-                                            binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().get(Constants.KEY_NOI_LAM_VIEC));
+                                            binding.tvNoiLamViec.setText("Hiện đang làm việc tại " + task.getResult().getString(Constants.KEY_NOI_LAM_VIEC));
                                             break;
                                         }
                                 }
@@ -150,22 +151,74 @@ public class ProfilePersonalFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful() && task.getResult().get(Constants.KEY_HOME_TOWN) != null){
                             if(userCurrentID.equals(id)){
-                                binding.tvQueQuan.setText("Quê quán tại " + task.getResult().get(Constants.KEY_HOME_TOWN));
-                                preferenceManager.putString(Constants.KEY_HOME_TOWN, task.getResult().get(Constants.KEY_HOME_TOWN).toString());
-                                preferenceManager.putString(Constants.KEY_CONG_KHAI_HOME_TOWN, task.getResult().get(Constants.KEY_CONG_KHAI_HOME_TOWN).toString());
+                                binding.tvQueQuan.setText("Quê quán tại " + task.getResult().getString(Constants.KEY_HOME_TOWN));
+                                ckQueQuan = task.getResult().getString(Constants.KEY_CONG_KHAI_HOME_TOWN);
                             }else
                             {
-                                switch (task.getResult().get(Constants.KEY_CONG_KHAI_HOME_TOWN).toString()){
+                                switch (task.getResult().getString(Constants.KEY_CONG_KHAI_HOME_TOWN)){
                                     case Constants.KEY_CDCK_CONG_KHAI:
-                                        binding.tvQueQuan.setText("Quê quán tại " + task.getResult().get(Constants.KEY_HOME_TOWN));
+                                        binding.tvQueQuan.setText("Quê quán tại " + task.getResult().getString(Constants.KEY_HOME_TOWN));
                                         break;
                                     case Constants.KEY_CDCK_BAN_BE:
                                         if(listMyFriend.contains(id)){
-                                            binding.tvQueQuan.setText("Quê quán tại " + task.getResult().get(Constants.KEY_HOME_TOWN));
+                                            binding.tvQueQuan.setText("Quê quán tại " + task.getResult().getString(Constants.KEY_HOME_TOWN));
                                             break;
                                         }
                                 }
                             }
+                    }
+                });
+    }
+    private void getDataGioiTinh(String id){
+        firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
+                .document(id)
+                .collection(Constants.KEY_GIOI_TINH)
+                .document(id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult().get(Constants.KEY_GIOI_TINH) != null){
+                        if(userCurrentID.equals(id)){
+                            binding.tvGioiTinh.setText(task.getResult().getString(Constants.KEY_GIOI_TINH));
+                            ckGT = task.getResult().getString(Constants.KEY_CONG_KHAI_GIOI_TINH);
+                        }else {
+                            switch (task.getResult().getString(Constants.KEY_CONG_KHAI_GIOI_TINH)){
+                                case Constants.KEY_CDCK_CONG_KHAI:
+                                    binding.tvGioiTinh.setText(task.getResult().getString(Constants.KEY_GIOI_TINH));
+                                    break;
+                                case Constants.KEY_CDCK_BAN_BE:
+                                    if(listMyFriend.contains(id)){
+                                        binding.tvGioiTinh.setText(task.getResult().getString(Constants.KEY_GIOI_TINH));
+                                        break;
+                                    }
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void getDataNamSinh(String id){
+        firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
+                .document(id)
+                .collection(Constants.KEY_NAM_SINH)
+                .document(id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult().getString(Constants.KEY_NAM_SINH) != null){
+                        if(userCurrentID.equals(id)){
+                            binding.tvYearOfBirth.setText(task.getResult().getString(Constants.KEY_NAM_SINH));
+                            ckNS = task.getResult().getString(Constants.KEY_CONG_KHAI_NAM_SINH);
+                        }else {
+                            switch (task.getResult().getString(Constants.KEY_CONG_KHAI_NAM_SINH)){
+                                case Constants.KEY_CDCK_CONG_KHAI:
+                                    binding.tvYearOfBirth.setText(task.getResult().getString(Constants.KEY_NAM_SINH));
+                                    break;
+                                case Constants.KEY_CDCK_BAN_BE:
+                                    if(listMyFriend.contains(id)){
+                                        binding.tvYearOfBirth.setText(task.getResult().getString(Constants.KEY_NAM_SINH));
+                                        break;
+                                    }
+                            }
+                        }
                     }
                 });
     }
@@ -194,15 +247,36 @@ public class ProfilePersonalFragment extends Fragment {
             gotoChat();
         });
         binding.layoutNoiSong.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.noiSongHienTaiFragment);
+            Bundle bundle = new Bundle();
+            String noiO="";
+            if(!binding.tvNoiSong.getText().toString().equals("Tỉnh/Thành phố hiện tại")){
+                noiO = binding.tvNoiSong.getText().toString().substring(19);
+            }
+            bundle.putString(Constants.KEY_NOI_O, noiO);
+            bundle.putString(Constants.KEY_CONG_KHAI_NOI_O, congKhaiNoiSong);
+            Navigation.findNavController(v).navigate(R.id.noiSongHienTaiFragment, bundle);
         });
 
         binding.layoutNoiLamViec.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.workPlaceFragment);
+            Bundle bundle = new Bundle();
+            String noiLamViec="";
+            if(!binding.tvNoiLamViec.getText().toString().equals("Nơi làm việc")){
+                noiLamViec = binding.tvNoiLamViec.getText().toString().substring(23);
+            }
+            bundle.putString(Constants.KEY_NOI_LAM_VIEC, noiLamViec);
+            bundle.putString(Constants.KEY_CONG_KHAI_NOI_LAM_VIEC, ckNLV);
+            Navigation.findNavController(v).navigate(R.id.workPlaceFragment, bundle);
         });
 
         binding.layoutQueQuan.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.homeTownFragment);
+            Bundle bundle = new Bundle();
+            String queQuan="";
+            if(!binding.tvQueQuan.getText().toString().equals("Quê quán")){
+                queQuan = binding.tvQueQuan.getText().toString().substring(13);
+            }
+            bundle.putString(Constants.KEY_HOME_TOWN, queQuan);
+            bundle.putString(Constants.KEY_CONG_KHAI_HOME_TOWN, ckQueQuan);
+            Navigation.findNavController(v).navigate(R.id.homeTownFragment, bundle);
         });
         binding.tvSearchFriend.setVisibility(View.VISIBLE);
         binding.tvSearchFriend.setOnClickListener(v -> {
@@ -212,6 +286,27 @@ public class ProfilePersonalFragment extends Fragment {
         binding.btnAllFriend.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.friendActivity);
         });
+        binding.layoutGioiTinh.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            String gioiTinh="";
+            if(!binding.tvGioiTinh.getText().toString().equals("Giới tính")){
+                gioiTinh = binding.tvGioiTinh.getText().toString();
+            }
+            bundle.putString(Constants.KEY_GIOI_TINH, gioiTinh);
+            bundle.putString(Constants.KEY_CONG_KHAI_GIOI_TINH, ckGT);
+            Navigation.findNavController(view).navigate(R.id.gioiTinhFragment, bundle);
+        });
+        binding.layoutYearOfBirth.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            String namSinh = null;
+            if(!binding.tvYearOfBirth.getText().toString().equals("Năm sinh")){
+                namSinh = binding.tvYearOfBirth.getText().toString();
+            }
+            bundle.putString(Constants.KEY_NAM_SINH, namSinh);
+            bundle.putString(Constants.KEY_CONG_KHAI_NAM_SINH, ckNS);
+            Navigation.findNavController(view).navigate(R.id.birthTimeFragment, bundle);
+        });
+
     }
 
 }
