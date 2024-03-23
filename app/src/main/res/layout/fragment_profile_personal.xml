@@ -35,7 +35,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -44,7 +44,8 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="UselessParent">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageProfile"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -55,7 +56,6 @@
                         android:id="@+id/tvName"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:textSize="@dimen/_18ssp"
-                        android:text="aaaaaaaaaaaaaaaaaaa"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -152,7 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/ic_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatImageView
                         android:background="@drawable/ic_yearofbirth"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -195,7 +195,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/ic_home" />
 
                     <TextView
@@ -203,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_11sdp"
+                        android:layout_marginStart="@dimen/_11sdp"
                         android:text="@string/t_nh_th_nh_ph_hi_n_t_i"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
@@ -218,7 +218,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/ic_work" />
 
                     <TextView
@@ -226,7 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_11sdp"
+                        android:layout_marginStart="@dimen/_11sdp"
                         android:text="@string/n_i_l_m_vi_c"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
@@ -241,7 +241,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:background="@drawable/ic_hometown" />
 
                     <TextView
@@ -249,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_11sdp"
+                        android:layout_marginStart="@dimen/_11sdp"
                         android:text="@string/qu_qu_n"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
@@ -266,7 +266,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:background="@drawable/ic_more" />
 
                     <TextView
@@ -274,7 +274,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_11sdp"
+                        android:layout_marginStart="@dimen/_11sdp"
                         android:text="@string/xem_th_ng_tin_gi_i_thi_u"
                         android:textSize="@dimen/_13ssp" />
                 </LinearLayout>
@@ -289,8 +289,8 @@
                         android:id="@+id/tvFriend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:text="Bạn bè"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="@string/b_n_b"
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -300,8 +300,7 @@
                         android:id="@+id/tvCountFriend2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:text="10 người bạn"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:textSize="@dimen/_13ssp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -311,9 +310,9 @@
                         android:id="@+id/tvSearchFriend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:gravity="center"
-                        android:text="Tìm bạn bè"
+                        android:text="@string/t_m_b_n_b"
                         android:textColor="@color/nameApp"
                         android:textSize="@dimen/_13ssp"
                         android:visibility="gone"
@@ -328,7 +327,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/background_btn_white"
-                    android:text="Xem tất cả bạn bè" />
+                    android:text="@string/xem_t_t_c_b_n_b" />
             </LinearLayout>
 
         </LinearLayout>

@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Năm sinh"
+            android:text="@string/n_m_sinh"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -44,7 +44,7 @@
         android:padding="@dimen/_5sdp"
         android:layout_margin="@dimen/_10sdp"
         android:id="@+id/btnCheDoCongKhai"
-        android:text=" Công khai "
+        android:text="@string/c_ng_khai"
         android:background="@drawable/background_btn_whiter"
         android:drawableStart="@drawable/ic_public"
         android:drawableEnd="@drawable/ic_down"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave"
-            android:text="Lưu"
+            android:text="@string/l_u"
             android:enabled="false"
             android:background="@drawable/background_btn_whiter"
             android:textColor="@color/gray"
