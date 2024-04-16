@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Amazon"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.ResetPWActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SearchUserActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.BaiVietActivity"
             android:exported="false" />
@@ -30,7 +37,7 @@
             android:name=".activities.InviteAddFriendActivity"
             android:theme="@style/Theme.Amazon" />
         <activity
-            android:name=".activities.CreatAccountActivity"
+            android:name=".activities.CreateAccountActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
@@ -47,6 +54,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="true" />
+
     </application>
 
 </manifest>

@@ -7,6 +7,34 @@ public class ChatMessage {
     private Date dateObject;
     private String lastMessage;
     private String conversionName, conversionImage, conservationId;
+    private String idPost;
+    private String imgPost;
+    private Boolean sharePost;
+    public String getIdPost() {
+        return idPost;
+    }
+
+    public void setIdPost(String idPost) {
+        this.idPost = idPost;
+    }
+
+    public String getImgPost() {
+        return imgPost;
+    }
+
+    public void setImgPost(String imgPost) {
+        this.imgPost = imgPost;
+    }
+
+    public Boolean getSharePost() {
+        return sharePost;
+    }
+
+    public void setSharePost(Boolean sharePost) {
+        this.sharePost = sharePost;
+    }
+
+
 
     public String getConservationId() {
         return conservationId;
@@ -32,7 +60,7 @@ public class ChatMessage {
         this.conversionImage = conversionImage;
     }
 
-    public ChatMessage(String senderId, String receiverID, String message, String dateTime, Date dateObject, String lastMessage, String conversionImage, String conservationId) {
+    public ChatMessage(String senderId, String receiverID, String message, String dateTime, Date dateObject, String lastMessage, String conversionImage, String conservationId, String idPost, String imgPost, Boolean sharePost) {
         this.senderId = senderId;
         this.receiverID = receiverID;
         this.message = message;
@@ -41,6 +69,9 @@ public class ChatMessage {
         this.lastMessage = lastMessage;
         this.conversionImage = conversionImage;
         this.conservationId = conservationId;
+        this.idPost = idPost;
+        this.imgPost = imgPost;
+        this.sharePost = sharePost;
     }
 
     public ChatMessage() {

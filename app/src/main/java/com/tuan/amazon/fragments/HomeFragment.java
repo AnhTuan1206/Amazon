@@ -200,4 +200,16 @@ public class HomeFragment extends Fragment implements HomeFlagmentListner {
         bottomSheetDialogComment.setArguments(bundle);
         bottomSheetDialogComment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogComment.getTag());
     }
+
+    @Override
+    public void share(Post post) {
+        SharePostFragment sharePostFragment = new SharePostFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_ID_POST, post.getPostId());
+        bundle.putString(Constants.KEY_IMAGE_POST, post.getImagePost());
+        sharePostFragment.setArguments(bundle);
+        sharePostFragment.show(getActivity().getSupportFragmentManager(), sharePostFragment.getTag());
+    }
+
+
 }

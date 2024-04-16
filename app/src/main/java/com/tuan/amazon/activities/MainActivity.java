@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.tuan.amazon.R;
 import com.tuan.amazon.adapters.MainAdapterViewPager2;
 import com.tuan.amazon.databinding.ActivityMainBinding;
@@ -61,9 +62,18 @@ public class MainActivity extends AppCompatActivity {
                     tab.setIcon(R.drawable.ic_other);
             }
         }).attach();
-
+        updateFCMToken();
     }
-
+    private void updateFCMToken(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                String token  = task.getResult();
+                firestore.collection(Constants.KEY_COLLECTION_USERS)
+                        .document(userCurrentID)
+                        .update(Constants.KEY_FCM_TOKEN, token);
+            }
+        });
+    }
     private void eventsClick(){
         binding.btnMessage.setOnClickListener(view -> {
             gotoChat();
@@ -71,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnBaiViet.setOnClickListener(view -> {
             startActivity(new Intent(this, BaiVietActivity.class));
+        });
+        binding.btnsearch.setOnClickListener(view -> {
+            startActivity(new Intent(this, SearchUserActivity.class));
         });
     }
 

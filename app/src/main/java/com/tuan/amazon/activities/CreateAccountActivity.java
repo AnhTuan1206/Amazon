@@ -32,7 +32,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreatAccountActivity extends AppCompatActivity {
+public class CreateAccountActivity extends AppCompatActivity {
 
     private ActivityCreatAccountBinding binding;
     private FirebaseAuth firebaseAuth;
@@ -58,7 +58,7 @@ public class CreatAccountActivity extends AppCompatActivity {
             pickImageProfile.launch(intent);
         });
         binding.btnCreatAccount.setOnClickListener(v -> {
-            String name = binding.etName.getText().toString().trim();
+            String name = binding.etName.getText().toString().trim().toUpperCase();
             String email = binding.etInputEmail.getText().toString().trim();
             String password = binding.etPassword.getText().toString().trim();
             String encodeImage = endcodedImage;
@@ -157,15 +157,6 @@ public class CreatAccountActivity extends AppCompatActivity {
                 });
     }
 
-//    private void loading(Boolean isLoading){
-//        if(isLoading){
-//            binding.btnCreatAccount.setVisibility(View.INVISIBLE);
-//            binding.progressBar.setVisibility(View.VISIBLE);
-//        }else {
-//            binding.btnCreatAccount.setVisibility(View.VISIBLE);
-//            binding.progressBar.setVisibility(View.INVISIBLE);
-//        }
-//    }
 
     private Boolean isValidSignupDetails() {
         if(endcodedImage == null){

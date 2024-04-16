@@ -96,6 +96,10 @@ public class HomeTownFragment extends Fragment implements TextWatcher {
         binding.btnCheDoCongKhai.setOnClickListener(v ->{
             dieuChinhCongKhai();
         });
+
+        binding.btnBack.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.profilePersonalFragment);
+        });
     }
 
     private void dieuChinhCongKhai(){

@@ -61,7 +61,7 @@ public class BaiVietFragment extends Fragment implements TextWatcher {
     }
 
     private void init(){
-        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        preferenceManager = new PreferenceManager(getContext());
         firestore = FirebaseFirestore.getInstance();
     }
 

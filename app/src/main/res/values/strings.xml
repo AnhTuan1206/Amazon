@@ -69,5 +69,17 @@
     <string name="n">Nữ</string>
     <string name="t_m_b_n_b">Tìm bạn bè</string>
     <string name="xem_t_t_c_b_n_b">Xem tất cả bạn bè</string>
+    <string name="chia_s">Chia sẻ</string>
+    <string name="chia_s_b_i_vi_t">Chia sẻ bài viết</string>
+    <string name="da_chia_s">Đã chia sẻ</string>
+    <string name="qu_n_m_t_kh_u">Quên mật khẩu</string>
+    <string name="h_y_nh_p_email_l_y_link_thay_i_m_t_kh_u">Hãy nhập email để lấy link thay đổi mật khẩu</string>
+    <string name="thay_i_m_t_kh_u">Thay đổi mật khẩu</string>
+    <string name="quay_l_i_ng_nh_p">Quay lại đăng nhập</string>
+    <string name="copy_id">Copy Id</string>
+    <string name="i_m_t_kh_u">Đổi mật khẩu</string>
+    <string name="m_t_kh_u_m_i">Mật khẩu mới</string>
+    <string name="x_c_nh_n_l_i_m_t_kh_u_m_i">Xác nhận lại mật khẩu mới</string>
+    <string name="m_t_kh_u_hi_n_t_i">Mật khẩu hiện tại</string>
 
 </resources>

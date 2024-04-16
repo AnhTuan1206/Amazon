@@ -6,17 +6,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
+
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -26,13 +23,14 @@ import com.tuan.amazon.models.ChatMessage;
 import com.tuan.amazon.utilities.Constants;
 import com.tuan.amazon.utilities.PreferenceManager;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+
 
 public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
@@ -40,6 +38,7 @@ public class ChatFragment extends Fragment {
     private static String userId;
     private static String image ;
     private static String name ;
+    private static String fcm ;
     private PreferenceManager preferenceManager;
     private ChatAdapter adapter;
     private List<ChatMessage> list;
@@ -63,7 +62,7 @@ public class ChatFragment extends Fragment {
 
     private void init(){
         firestore = FirebaseFirestore.getInstance();
-        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        preferenceManager = new PreferenceManager(getContext());
         list = new ArrayList<>();
         adapter = new ChatAdapter(list, getBitmapFromEncode(image), userCurrentID);
         binding.recyclerChat.setAdapter(adapter);
@@ -99,25 +98,36 @@ public class ChatFragment extends Fragment {
 
 
     private void sentChatMessage(){
-        Map<String, Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put(Constants.KEY_SENDER_ID, userCurrentID);
+        map.put(Constants.KEY_CHECK_POST_SHARE, false);
         map.put(Constants.KEY_RECEIVER_ID, userId);
         map.put(Constants.KEY_CHAT_MESSAGE, binding.etChatMessage.getText().toString());
         map.put(Constants.KEY_TIME_SEND, new Date());
         firestore.collection(Constants.KEY_CHAT_MESSAGE).add(map);
+        map.clear();
 
-        HashMap<String,Object> conversation = new HashMap<>();
-        conversation.put(Constants.KEY_SENDER_ID, userCurrentID);
-        conversation.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
-        conversation.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_USER_IMAGE));
-        conversation.put(Constants.KEY_RECEIVER_NAME, name);
-        conversation.put(Constants.KEY_RECEIVER_IMAGE, image);
-        conversation.put(Constants.KEY_RECEIVER_ID, userId);
-        conversation.put(Constants.KEY_LAST_MESSAGE, binding.etChatMessage.getText().toString());
-        conversation.put(Constants.KEY_TIME_SEND, new Date());
-        addConversation(conversation);
+        map.put(Constants.KEY_SENDER_ID, userCurrentID);
+        map.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
+        map.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_USER_IMAGE));
+        map.put(Constants.KEY_RECEIVER_NAME, name);
+        map.put(Constants.KEY_RECEIVER_IMAGE, image);
+        map.put(Constants.KEY_RECEIVER_ID, userId);
+        map.put(Constants.KEY_LAST_MESSAGE, binding.etChatMessage.getText().toString());
+        map.put(Constants.KEY_TIME_SEND, new Date());
+        addConversation(map);
 
         binding.etChatMessage.setText(null);
+        if (fcm == null){
+            firestore.collection(Constants.KEY_COLLECTION_USERS)
+                    .document(userId)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            fcm = task.getResult().getString(Constants.KEY_FCM_TOKEN);
+                        }
+                    });
+        }
     }
 
     private void listenChatMessage(){
@@ -140,8 +150,14 @@ public class ChatFragment extends Fragment {
             for (DocumentChange documentChange : value.getDocumentChanges()){
                 if(documentChange.getType() == DocumentChange.Type.ADDED){
                     ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.setSharePost(documentChange.getDocument().getBoolean(Constants.KEY_CHECK_POST_SHARE));
+                    if(Boolean.TRUE.equals(documentChange.getDocument().getBoolean(Constants.KEY_CHECK_POST_SHARE))){
+                        chatMessage.setImgPost(documentChange.getDocument().getString(Constants.KEY_IMAGE_POST));
+                        chatMessage.setIdPost(documentChange.getDocument().getString(Constants.KEY_ID_POST));
+                    }else {
+                        chatMessage.setMessage(documentChange.getDocument().getString(Constants.KEY_CHAT_MESSAGE));
+                    }
                     chatMessage.setSenderId(documentChange.getDocument().getString(Constants.KEY_SENDER_ID));
-                    chatMessage.setMessage(documentChange.getDocument().getString(Constants.KEY_CHAT_MESSAGE));
                     chatMessage.setReceiverID( documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID));
                     chatMessage.setDateObject(documentChange.getDocument().getDate(Constants.KEY_TIME_SEND));
                     chatMessage.setDateTime(getReadableDataTime(documentChange.getDocument().getDate(Constants.KEY_TIME_SEND)));

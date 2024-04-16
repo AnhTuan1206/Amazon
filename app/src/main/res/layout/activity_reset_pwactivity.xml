@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ResetPWActivity">
+
+    <TextView
+        android:id="@+id/tvQMK"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/qu_n_m_t_kh_u"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/_30ssp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvHuongDan"
+        android:text="@string/h_y_nh_p_email_l_y_link_thay_i_m_t_kh_u"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintTop_toBottomOf="@id/tvQMK"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etInputEmail"
+        app:layout_constraintTop_toBottomOf="@id/tvHuongDan"
+        android:layout_marginTop="@dimen/_70sdp"
+        android:imeOptions="actionNext"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:paddingStart="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp"
+        android:hint="@string/email"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:textSize="@dimen/_15ssp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnResetPW"
+        app:layout_constraintTop_toBottomOf="@id/etInputEmail"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/_75sdp"
+        android:text="@string/thay_i_m_t_kh_u"
+        android:textSize="@dimen/_15ssp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvBackLogin"
+        app:layout_constraintTop_toBottomOf="@id/btnResetPW"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/quay_l_i_ng_nh_p"
+        android:textSize="@dimen/_15ssp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

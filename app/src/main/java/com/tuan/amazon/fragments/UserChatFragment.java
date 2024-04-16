@@ -102,7 +102,7 @@ public class UserChatFragment extends Fragment implements DanhSachBanBeDeChatLis
                             }
                         }
                         if(list.size() > 0){
-                            adapter = new UserAdapter(list,4,null,null,null,this);
+                            adapter = new UserAdapter(list,4,null,null,null,this, null, null);
                             LinearLayoutManager layoutManager
                                     = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
                             binding.recyclerListUserToChat.setLayoutManager(layoutManager);

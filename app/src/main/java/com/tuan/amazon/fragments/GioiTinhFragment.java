@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -137,6 +138,10 @@ public class GioiTinhFragment extends Fragment implements TextWatcher {
 
         binding.btnCheDoCongKhai.setOnClickListener(view -> {
             dieuChinhCongKhai();
+        });
+
+        binding.btnBack.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.profilePersonalFragment);
         });
     }
 

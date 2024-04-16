@@ -94,27 +94,27 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnAddTin"
-                        android:text="@string/th_m_v_o_tin"
-                        android:background="@drawable/background_btn_blue"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_marginBottom="@dimen/_8sdp"
-                        android:textColor="@color/white"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"/>
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnSettingPersonalPage"
-                        android:background="@drawable/background_btn_white_big_size"
-                        android:text="@string/ch_nh_s_a_trang_c_nh_n"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"/>
+<!--                    <androidx.appcompat.widget.AppCompatButton-->
+<!--                        android:id="@+id/btnAddTin"-->
+<!--                        android:text="@string/th_m_v_o_tin"-->
+<!--                        android:background="@drawable/background_btn_blue"-->
+<!--                        android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                        android:layout_marginRight="@dimen/_10sdp"-->
+<!--                        android:layout_marginTop="@dimen/_15sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_8sdp"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_30sdp"/>-->
+<!--                    <androidx.appcompat.widget.AppCompatButton-->
+<!--                        android:id="@+id/btnSettingPersonalPage"-->
+<!--                        android:background="@drawable/background_btn_white_big_size"-->
+<!--                        android:text="@string/ch_nh_s_a_trang_c_nh_n"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                        android:layout_marginRight="@dimen/_10sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_30sdp"/>-->
                 </LinearLayout>
 
             </LinearLayout>
@@ -128,6 +128,12 @@
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/background_icon_xanh_nhat"
                     android:text="@string/b_i_vi_t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnCopyId"
+                    android:background="@drawable/background_icon_xanh_nhat"
+                    android:text="@string/copy_id"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"/>
             </androidx.appcompat.widget.Toolbar>
@@ -330,7 +336,15 @@
                     android:text="@string/xem_t_t_c_b_n_b" />
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerListPost"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
+
+
     </ScrollView>
 
 </LinearLayout>

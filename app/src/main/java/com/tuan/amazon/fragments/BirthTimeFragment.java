@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,7 +36,6 @@ public class BirthTimeFragment extends Fragment implements TextWatcher {
     private FirebaseFirestore firestore;
     private String namSinh;
     private static int day , month , year;
-
     public BirthTimeFragment() {
 
         // Required empty public constructor
@@ -83,6 +84,7 @@ public class BirthTimeFragment extends Fragment implements TextWatcher {
                 }
             });
         }
+
     }
 
 
@@ -110,6 +112,8 @@ public class BirthTimeFragment extends Fragment implements TextWatcher {
                         }
                     });
         });
+
+
     }
 
     private void setEnableBtnSave(){

@@ -10,15 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuan.amazon.R;
 import com.tuan.amazon.databinding.ItemContainerFriendBinding;
 import com.tuan.amazon.databinding.ItemContainerListUserToChatBinding;
 import com.tuan.amazon.databinding.ItemContainerLoimoikbBinding;
 import com.tuan.amazon.databinding.ItemContainerPeopleYouMayKnowBinding;
+import com.tuan.amazon.databinding.ItemContainerSearchBinding;
+import com.tuan.amazon.databinding.ItemContainerSharePostBinding;
 import com.tuan.amazon.listeners.DanhSachBanBeDeChatListener;
 import com.tuan.amazon.listeners.FriendListener;
 import com.tuan.amazon.listeners.GoiYKetBanListener;
 import com.tuan.amazon.listeners.LoiMoiKetBanListener;
+import com.tuan.amazon.listeners.SearchUserListener;
+import com.tuan.amazon.listeners.SharePost;
 import com.tuan.amazon.models.User;
 
 import java.util.List;
@@ -30,18 +33,24 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private LoiMoiKetBanListener loiMoiKetBanListener;
     private FriendListener friendListener;
     private DanhSachBanBeDeChatListener danhSachBanBeDeChat;
+    private SearchUserListener searchUser;
+    private SharePost sharePost;
     private int VIEW_TYPE ;
 
     public UserAdapter(List<User> list, int VIEW_TYPE, @Nullable GoiYKetBanListener goiYKetBanListener,
                        @Nullable LoiMoiKetBanListener loiMoiKetBanListener,
                        @Nullable FriendListener friendListener,
-                       @Nullable DanhSachBanBeDeChatListener danhSachBanBeDeChat) {
+                       @Nullable DanhSachBanBeDeChatListener danhSachBanBeDeChat,
+                       @Nullable SharePost sharePost,
+                       @Nullable SearchUserListener searchUser) {
         this.list = list;
         this.VIEW_TYPE = VIEW_TYPE;
         this.goiYKetBanListener = goiYKetBanListener;
         this.loiMoiKetBanListener = loiMoiKetBanListener;
         this.friendListener = friendListener;
         this.danhSachBanBeDeChat = danhSachBanBeDeChat;
+        this.sharePost = sharePost;
+        this.searchUser = searchUser;
     }
 
     public void setFilteredList(List<User> filteredList){
@@ -68,6 +77,16 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         LayoutInflater.from(parent.getContext())
                         , parent, false
                 ));
+            case 5:
+                return new FriendToSharePost(ItemContainerSharePostBinding.inflate(
+                        LayoutInflater.from(parent.getContext())
+                        , parent, false
+                ));
+            case 6:
+                return new SearchUser(ItemContainerSearchBinding.inflate(
+                        LayoutInflater.from(parent.getContext())
+                        , parent, false
+                ));
             default:
                 return new BanBe(ItemContainerFriendBinding.inflate(
                         LayoutInflater.from(parent.getContext())
@@ -91,6 +110,10 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             case 4:
                 ((DanhSachBanBeDeChat) holder).setData(list.get(position));
                 break;
+            case 5:
+                ((FriendToSharePost) holder).setData(list.get(position));
+            case 6:
+                ((SearchUser) holder).setData(list.get(position));
         }
     }
 
@@ -185,6 +208,9 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             binding.imageProfile.setOnClickListener(v ->{
                 friendListener.goToProfile(user);
             });
+            binding.tvRemove.setOnClickListener(view -> {
+                friendListener.removeFriend(user);
+            });
         }
     }
 
@@ -200,6 +226,40 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             binding.img.setOnClickListener( view -> {
                 danhSachBanBeDeChat.goToChat(user);
+            });
+        }
+    }
+
+    class FriendToSharePost extends RecyclerView.ViewHolder{
+        private ItemContainerSharePostBinding binding;
+        public FriendToSharePost(ItemContainerSharePostBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+        void setData(User user){
+            binding.tvName.setText(user.getName());
+            binding.imgAvatar.setImageBitmap(setImage(user.getImage()));
+
+            binding.btnShare.setOnClickListener(view -> {
+                sharePost.sharePost(user);
+                binding.btnShare.setVisibility(View.GONE);
+                binding.tvShared.setVisibility(View.VISIBLE);
+            });
+        }
+    }
+
+    class SearchUser extends RecyclerView.ViewHolder{
+        private ItemContainerSearchBinding binding;
+
+        public SearchUser(ItemContainerSearchBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+        void setData(User user){
+            binding.tvName.setText(user.getName());
+            binding.imgAvatar.setImageBitmap(setImage(user.getImage()));
+            binding.imgAvatar.setOnClickListener(view -> {
+                searchUser.goToProfile(user);
             });
         }
     }

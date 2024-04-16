@@ -1,7 +1,10 @@
 package com.tuan.amazon.adapters;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -71,11 +74,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding = itemContainerSentMessageBinding;
         }
         void setData(ChatMessage chatMessage){
-            binding.textMessage.setText(chatMessage.getMessage());
+            if(chatMessage.getSharePost()){
+                binding.textMessage.setVisibility(View.GONE);
+                binding.tvThongBaoShare.setVisibility(View.VISIBLE);
+                if(chatMessage.getImgPost()!=null){
+                    binding.imgPost.setVisibility(View.VISIBLE);
+                    binding.imgPost.setImageBitmap(setImage(chatMessage.getImgPost()));
+                }
+            }else {
+                binding.textMessage.setText(chatMessage.getMessage());
+                binding.textMessage.setVisibility(View.VISIBLE);
+                binding.tvThongBaoShare.setVisibility(View.GONE);
+                binding.imgPost.setVisibility(View.GONE);
+            }
             binding.textDateTime.setText(chatMessage.getDateTime());
         }
     }
-
     static class ReceiverMassageViewHolder extends RecyclerView.ViewHolder{
         private final ItemContainerReceivedMessageBinding binding;
         public ReceiverMassageViewHolder(ItemContainerReceivedMessageBinding itemContainerReceivedMessageBinding) {
@@ -83,11 +97,28 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding = itemContainerReceivedMessageBinding;
         }
         void setData(ChatMessage chatMessage, Bitmap receiverProfileImage){
-            binding.textMessage.setText(chatMessage.getMessage());
-            binding.textDateTime.setText(chatMessage.getDateTime());
+            if(chatMessage.getSharePost()){
+                binding.textMessage.setVisibility(View.GONE);
+                binding.tvThongBaoShare.setVisibility(View.VISIBLE);
+                if(chatMessage.getImgPost()!=null){
+                    binding.imgPost.setVisibility(View.VISIBLE);
+                    binding.imgPost.setImageBitmap(setImage(chatMessage.getImgPost()));
+                }
+            }else {
+                binding.textMessage.setText(chatMessage.getMessage());
+                binding.textMessage.setVisibility(View.VISIBLE);
+                binding.tvThongBaoShare.setVisibility(View.GONE);
+                binding.imgPost.setVisibility(View.GONE);
+            }
             if(receiverProfileImage != null){
                 binding.imageProfile.setImageBitmap(receiverProfileImage);
             }
+            binding.textDateTime.setText(chatMessage.getDateTime());
         }
+    }
+
+    private static Bitmap setImage(String image){
+        byte[] bytes = Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

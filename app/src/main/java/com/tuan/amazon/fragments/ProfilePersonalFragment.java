@@ -3,6 +3,9 @@ package com.tuan.amazon.fragments;
 import static com.tuan.amazon.activities.MainActivity.listMyFriend;
 import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,24 +18,40 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.tuan.amazon.R;
 import com.tuan.amazon.activities.ChatActivity;
 import com.tuan.amazon.activities.ProfileActivity;
+import com.tuan.amazon.adapters.PostAdapter;
 import com.tuan.amazon.databinding.FragmentProfilePersonalBinding;
+import com.tuan.amazon.listeners.HomeFlagmentListner;
+import com.tuan.amazon.models.Post;
 import com.tuan.amazon.utilities.Constants;
 import com.tuan.amazon.utilities.PreferenceManager;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-public class ProfilePersonalFragment extends Fragment {
+
+public class ProfilePersonalFragment extends Fragment implements HomeFlagmentListner {
    
     private FragmentProfilePersonalBinding binding;
     private FirebaseFirestore firestore;
     private PreferenceManager preferenceManager;
-    private ProfileActivity profileActivity;
+    private ProfileActivity profileActivity = (ProfileActivity) getActivity();
     private String userId;
     private static String congKhaiNoiSong="", ckQueQuan="", ckNLV="", ckGT = "", ckNS = "";
+    private PostAdapter adapter;
+    private List<Post> list;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +63,7 @@ public class ProfilePersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfilePersonalBinding.inflate(inflater, null, false);
         getInitView();
+        getPost();
         eventsClick();
         return binding.getRoot();
     }
@@ -52,10 +72,11 @@ public class ProfilePersonalFragment extends Fragment {
     private void init(){
         firestore = FirebaseFirestore.getInstance();
         preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        list = new ArrayList<>();
     }
 
     private void getInitView(){
-         profileActivity = (ProfileActivity) getActivity();
+        profileActivity  = (ProfileActivity) getActivity();
          userId = profileActivity.getId();
         if(userCurrentID.equals(userId)){
             binding.tvCountFriend2.setText(listMyFriend.size() + " bạn bè");
@@ -65,12 +86,14 @@ public class ProfilePersonalFragment extends Fragment {
             binding.tvName.setText(profileActivity.getName());
             loadImage(profileActivity.getImage());
             binding.tvCountFriend2.setVisibility(View.GONE);
-            binding.btnAddTin.setVisibility(View.GONE);
-            binding.btnSettingPersonalPage.setVisibility(View.GONE);
+//            binding.btnAddTin.setVisibility(View.GONE);
+//            binding.btnSettingPersonalPage.setVisibility(View.GONE);
             binding.layoutNoiSong.setEnabled(false);
             binding.layoutQueQuan.setEnabled(false);
+            binding.btnAllFriend.setVisibility(View.GONE);
             binding.layoutNoiLamViec.setEnabled(false);
             binding.layoutGioiTinh.setEnabled(false);
+            binding.layoutYearOfBirth.setEnabled(false);
             binding.btnChat.setVisibility(View.VISIBLE);
             if(!listMyFriend.contains(userId)){
                 binding.btnaddFriend.setVisibility(View.VISIBLE);
@@ -81,7 +104,9 @@ public class ProfilePersonalFragment extends Fragment {
         getDataProfileQueQuan(userId);
         getDataGioiTinh(userId);
         getDataNamSinh(userId);
+
     }
+
 
     private void getDataProfileNoiSong(String id){
         firestore.collection(Constants.KEY_PERSONAL_INFORMATION)
@@ -223,6 +248,40 @@ public class ProfilePersonalFragment extends Fragment {
                 });
     }
 
+    private void getPost(){
+        firestore.collection(Constants.KEY_POSTS)
+                .whereEqualTo(Constants.KEY_CREATOR_ID, userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                            Post post = new Post();
+                            post.setPostId(queryDocumentSnapshot.getId());
+                            post.setCountLike(queryDocumentSnapshot.getLong(Constants.KEY_COUNT_LIKE).intValue());
+                            post.setCountComment(queryDocumentSnapshot.getLong(Constants.KEY_COUNT_COMMENT).intValue());
+                            post.setImagePost(queryDocumentSnapshot.getString(Constants.KEY_IMAGE_POST));
+                            post.setCreatorId(userId);
+                            post.setCaption(queryDocumentSnapshot.getString(Constants.KEY_CAPTION));
+                            post.setCreatorName(profileActivity.getName());
+                            post.setImgCreator(profileActivity.getImage());
+                            boolean check = queryDocumentSnapshot.contains(userCurrentID);
+                            post.setLike(check);
+                            post.setDateObject(queryDocumentSnapshot.getDate(Constants.KEY_TIME_CREATE_POST));
+                            post.setDateTime(getReadableDataTime(queryDocumentSnapshot.getDate(Constants.KEY_TIME_CREATE_POST)));
+                            list.add(post);
+                        }
+                    }
+                    if (list.size() > 0) {
+                        adapter = new PostAdapter(list, this);
+                        binding.recyclerListPost.setAdapter(adapter);
+                    }
+                });
+    }
+
+    private String getReadableDataTime(Date date){
+        return new SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date);
+    }
+
 
     private void loadImage(String image){
         byte[] bytes = Base64.decode(image, Base64.DEFAULT);
@@ -243,6 +302,9 @@ public class ProfilePersonalFragment extends Fragment {
     }
 
     private void eventsClick() {
+        binding.btnBack.setOnClickListener(view -> {
+            getActivity().onBackPressed();
+        });
         binding.btnChat.setOnClickListener(view -> {
             gotoChat();
         });
@@ -307,6 +369,66 @@ public class ProfilePersonalFragment extends Fragment {
             Navigation.findNavController(view).navigate(R.id.birthTimeFragment, bundle);
         });
 
+        binding.btnCopyId.setOnClickListener(view -> {
+            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("simple text", userId);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(getActivity().getApplicationContext(), "Đã copy id thành công", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
+    @Override
+    public void like(Post post) {
+        Map map = new HashMap();
+        if(post.getLike()){
+            firestore.collection(Constants.KEY_POSTS)
+                    .document(post.getPostId())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            int countLike =  task.getResult().getLong(Constants.KEY_COUNT_LIKE).intValue() + 1;
+                            firestore.collection(Constants.KEY_POSTS)
+                                    .document(post.getPostId())
+                                    .update(Constants.KEY_COUNT_LIKE, countLike);
+                        }
+                    });
+            map.put(userCurrentID,userCurrentID);
+            firestore.collection(Constants.KEY_POSTS)
+                    .document(post.getPostId())
+                    .update(map);
+        }
+        else {
+            firestore.collection(Constants.KEY_POSTS)
+                    .document(post.getPostId())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            int countLike =  task.getResult().getLong(Constants.KEY_COUNT_LIKE).intValue() - 1;
+                            firestore.collection(Constants.KEY_POSTS)
+                                    .document(post.getPostId())
+                                    .update(Constants.KEY_COUNT_LIKE, countLike);
+                        }
+                    });
+            map.put(userCurrentID, FieldValue.delete());
+            firestore.collection(Constants.KEY_POSTS)
+                    .document(post.getPostId())
+                    .update(map);
+        }
+    }
+
+    @Override
+    public void comment(Post post) {
+        BottomSheetDialogComment bottomSheetDialogComment = new BottomSheetDialogComment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_ID_POST,post.getPostId());
+        bottomSheetDialogComment.setArguments(bundle);
+        bottomSheetDialogComment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogComment.getTag());
+    }
+
+    @Override
+    public void share(Post post) {
+        SharePostFragment sharePostFragment = new SharePostFragment();
+        sharePostFragment.show(getActivity().getSupportFragmentManager(), sharePostFragment.getTag());
+    }
 }

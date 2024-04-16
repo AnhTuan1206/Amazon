@@ -28,7 +28,6 @@ import com.tuan.amazon.R;
 import com.tuan.amazon.activities.ProfileActivity;
 import com.tuan.amazon.adapters.CommentAdapter;
 import com.tuan.amazon.databinding.BottomsheetCommentBinding;
-import com.tuan.amazon.databinding.LayoutEditCommentBinding;
 import com.tuan.amazon.listeners.CommentListener;
 import com.tuan.amazon.models.Comment;
 import com.tuan.amazon.utilities.Constants;

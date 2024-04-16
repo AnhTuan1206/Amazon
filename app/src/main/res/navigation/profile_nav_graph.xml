@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_noiSongHienTaiFragment_to_profilePersonalFragment"
             app:destination="@id/profilePersonalFragment" />
+        <action
+            android:id="@+id/action_noiSongHienTaiFragment_to_profilePersonalFragment2"
+            app:destination="@id/profilePersonalFragment" />
     </fragment>
     <fragment
         android:id="@+id/workPlaceFragment"
@@ -58,6 +61,9 @@
         <action
             android:id="@+id/action_homeTownFragment_to_profilePersonalFragment"
             app:destination="@id/profilePersonalFragment" />
+        <action
+            android:id="@+id/action_homeTownFragment_to_profilePersonalFragment2"
+            app:destination="@id/profilePersonalFragment" />
     </fragment>
     <activity
         android:id="@+id/friendActivity"
@@ -68,15 +74,33 @@
         android:id="@+id/friendFragment"
         android:name="com.tuan.amazon.fragments.GoiYKetBanFragment"
         android:label="fragment_friend"
-        tools:layout="@layout/fragment_goi_y_ket_ban" />
+        tools:layout="@layout/fragment_goi_y_ket_ban" >
+        <action
+            android:id="@+id/action_friendFragment_to_profilePersonalFragment"
+            app:destination="@id/profilePersonalFragment" />
+        <action
+            android:id="@+id/action_friendFragment_to_profilePersonalFragment2"
+            app:destination="@id/profilePersonalFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gioiTinhFragment"
         android:name="com.tuan.amazon.fragments.GioiTinhFragment"
         android:label="fragment_gioi_tinh"
-        tools:layout="@layout/fragment_gioi_tinh" />
+        tools:layout="@layout/fragment_gioi_tinh" >
+        <action
+            android:id="@+id/action_gioiTinhFragment_to_profilePersonalFragment"
+            app:destination="@id/profilePersonalFragment" />
+        <action
+            android:id="@+id/action_gioiTinhFragment_to_profilePersonalFragment2"
+            app:destination="@id/profilePersonalFragment" />
+    </fragment>
     <fragment
         android:id="@+id/birthTimeFragment"
         android:name="com.tuan.amazon.fragments.BirthTimeFragment"
         android:label="fragment_birth_time"
-        tools:layout="@layout/fragment_birth_time" />
+        tools:layout="@layout/fragment_birth_time" >
+        <action
+            android:id="@+id/action_birthTimeFragment_to_profilePersonalFragment"
+            app:destination="@id/profilePersonalFragment" />
+    </fragment>
 </navigation>

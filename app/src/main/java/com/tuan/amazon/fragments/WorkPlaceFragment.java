@@ -96,6 +96,7 @@ public class WorkPlaceFragment extends Fragment implements TextWatcher {
         binding.btnCheDoCongKhai.setOnClickListener(v ->{
             dieuChinhCongKhai();
         });
+
     }
 
     private void dieuChinhCongKhai(){

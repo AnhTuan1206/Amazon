@@ -10,13 +10,12 @@
     tools:context=".fragments.GoiYKetBanFragment">
 
     <LinearLayout
-        android:layout_marginStart="@dimen/_8sdp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
+            android:layout_marginStart="@dimen/_8sdp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -41,6 +40,7 @@
         </LinearLayout>
 
         <TextView
+            android:layout_marginStart="@dimen/_8sdp"
             android:text="@string/nh_ng_ng_i_c_th_b_n_bi_t"
             android:textSize="@dimen/_18sdp"
             android:textColor="@color/black"
@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginStart="@dimen/_8sdp"
             android:id="@+id/recyclerListFriendFragment"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"

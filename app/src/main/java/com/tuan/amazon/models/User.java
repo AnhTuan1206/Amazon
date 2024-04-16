@@ -8,15 +8,28 @@ public class User  {
     private String id;
     private String image;
     private boolean inviteAddFriend;
+    private String FCM;
 
+    public boolean isInviteAddFriend() {
+        return inviteAddFriend;
+    }
+
+    public String getFCM() {
+        return FCM;
+    }
+
+    public void setFCM(String FCM) {
+        this.FCM = FCM;
+    }
 
     public User() {
     }
-    public User(String name, String id, String image, boolean inviteAddFriend) {
+    public User(String name, String id, String image, boolean inviteAddFriend, String fcm) {
         this.name = name;
         this.id = id;
         this.image = image;
         this.inviteAddFriend = inviteAddFriend;
+        FCM = fcm;
     }
 
     public String getName() {

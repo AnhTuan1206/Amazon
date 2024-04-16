@@ -63,6 +63,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolde
                 binding.imgLike.setBackgroundResource(R.drawable.ic_like_btn);
             }
             binding.tvName.setText(post.getCreatorName());
+            binding.tvTimePost.setText(post.getDateTime());
             binding.tvCaption.setText(post.getCaption());
             if(!post.getImagePost().equals("null")){
                 binding.imgPost.setImageBitmap(setImg(post.getImagePost()));
@@ -87,6 +88,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostsViewHolde
             });
             binding.layoutCom.setOnClickListener(view -> {
                 listener.comment(post);
+            });
+
+            binding.layoutShare.setOnClickListener(view -> {
+                listener.share(post);
             });
         }
     }

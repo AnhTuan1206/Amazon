@@ -2,7 +2,6 @@ package com.tuan.amazon.listeners;
 
 import com.tuan.amazon.models.User;
 
-public interface FriendListener {
+public interface SearchUserListener {
     void goToProfile(User user);
-    void removeFriend(User user);
 }

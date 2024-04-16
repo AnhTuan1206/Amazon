@@ -6,6 +6,7 @@ public class Constants {
     public static final String KEY_EMAIL = "email";
     public static  final String KEY_USER_ID = "userId";
     public static final String KEY_USER_IMAGE = "userImage";
+    public static final String KEY_FCM_TOKEN = "fcmToken";
     public static final String KEY_FRIEND = "friend";
     public static final String KEY_LMKB = "lờiMờiKếtBạn";
     public static final String KEY_GD = "bạnGửiLờiMờiĐến";
@@ -50,4 +51,6 @@ public class Constants {
     public static final String KEY_CONG_KHAI_GIOI_TINH = "congKhaiGioiTinh";
     public static final String KEY_NAM_SINH = "namSinh";
     public static final String KEY_CONG_KHAI_NAM_SINH = "congKhaiNamSinh";
+    public static final String KEY_POST_SHARE = "postShare";
+    public static final String KEY_CHECK_POST_SHARE = "checkPostShare";
 }

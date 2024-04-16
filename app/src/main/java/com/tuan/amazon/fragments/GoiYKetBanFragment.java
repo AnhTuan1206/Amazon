@@ -8,6 +8,7 @@ import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.tuan.amazon.R;
 import com.tuan.amazon.activities.FriendActivity;
 import com.tuan.amazon.activities.InviteAddFriendActivity;
 import com.tuan.amazon.activities.ProfileActivity;
@@ -61,6 +63,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
         binding.btnFriend.setOnClickListener(v ->{
             startActivity(new Intent(getActivity().getApplicationContext(), FriendActivity.class));
         });
+
     }
 
     private void init(){
@@ -116,7 +119,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                userAdapter = new UserAdapter(list,1, this, null, null, null);
+                                userAdapter = new UserAdapter(list,1, this, null, null, null, null, null);
                                 binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }
@@ -138,7 +141,7 @@ public class GoiYKetBanFragment extends Fragment implements GoiYKetBanListener {
                                 list.add(user);
                             }
                             if(list.size() > 0){
-                                userAdapter= new UserAdapter(list, 1, this, null, null, null);
+                                userAdapter= new UserAdapter(list, 1, this, null, null, null, null, null);
                                 binding.recyclerListFriendFragment.setAdapter(userAdapter);
                             }
                         }

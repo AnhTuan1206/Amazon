@@ -54,29 +54,20 @@
             android:layout_height="@dimen/_45sdp"/>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        app:layout_constraintTop_toBottomOf="@id/linerLayout"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@id/linerLayout"
+            android:layout_marginTop="@dimen/_16sdp"
             android:text="@string/ng_nh_p"
             android:textSize="@dimen/_15ssp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"/>
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"/>
-    </FrameLayout>
+
 
     <TextView
         android:id="@+id/tvLoginGoogle"
-        app:layout_constraintTop_toBottomOf="@id/frameLayout"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
         android:text="@string/ng_nh_p_v_i_t_i_kho_n_google"
         android:textColor="@color/black"
         android:textSize="@dimen/_15ssp"
@@ -94,6 +85,19 @@
         android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="@dimen/_15ssp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvForgotPW"
+        app:layout_constraintTop_toBottomOf="@id/tvCreatAccount"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/qu_n_m_t_kh_u"
+        android:textSize="@dimen/_15ssp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

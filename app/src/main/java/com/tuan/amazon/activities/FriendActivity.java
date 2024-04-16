@@ -1,11 +1,14 @@
 package com.tuan.amazon.activities;
 
 import static com.tuan.amazon.activities.MainActivity.listMyFriend;
+import static com.tuan.amazon.activities.MainActivity.userCurrentID;
 import static com.tuan.amazon.activities.MainActivity.userCurrentName;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -67,7 +70,7 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
     private void filterList(String txt){
         List<User> filterList = new ArrayList<>();
         for (User user : list){
-            if(user.getName().toLowerCase().contains(txt.toLowerCase())){
+            if(user.getName().toUpperCase().contains(txt.toUpperCase())){
                 filterList.add(user);
             }
         }
@@ -110,7 +113,7 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
                             }
                         }
                         if(list.size() > 0){
-                            userAdapter = new UserAdapter(list,3, null, null, this, null);
+                            userAdapter = new UserAdapter(list,3, null, null, this, null, null, null);
                             binding.recyclerFriend.setAdapter(userAdapter);
                         }
                     });
@@ -121,6 +124,40 @@ public class FriendActivity extends AppCompatActivity implements FriendListener 
     public void goToProfile(User user) {
         goProfileActivity(user);
     }
+
+    @Override
+    public void removeFriend(User user) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Xoá bạn bè");
+        alertDialog.setMessage("Bạn có chắc muốn huỷ bạn bè với "+user.getName() +" không?");
+
+        alertDialog.setPositiveButton("Có", (dialogInterface, i) -> {
+            removeFr(user);
+            listMyFriend.remove(user);
+            list.remove(user);
+            userAdapter.notifyDataSetChanged();
+            Toast.makeText(this,"Huỷ bạn bè với "+user.getName()+" thành công",Toast.LENGTH_SHORT).show();
+        });
+
+        alertDialog.setNegativeButton("Không", (dialogInterface, i) -> {
+
+        });
+        alertDialog.show();
+    }
+
+    private void removeFr(User user){
+        firestore.collection(Constants.KEY_FRIEND)
+                .document(userCurrentID)
+                .collection(Constants.KEY_YOUR_FRIENDS)
+                .document(user.getId())
+                .delete();
+        firestore.collection(Constants.KEY_FRIEND)
+                .document(user.getId())
+                .collection(Constants.KEY_YOUR_FRIENDS)
+                .document(userCurrentID)
+                .delete();
+    }
+
     private void goProfileActivity(User user){
         Intent intent = new Intent(this, ProfileActivity.class);
         Bundle bundle = new Bundle();

@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -87,7 +88,7 @@ public class noiSongHienTaiFragment extends Fragment implements TextWatcher {
         });
 
         binding.btnBack.setOnClickListener(v ->{
-//            Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
+            Navigation.findNavController(v).navigate(R.id.profilePersonalFragment);
         });
     }
 
